@@ -1,0 +1,207 @@
+%\documentclass[a4paper]{article}
+%\usepackage{beamerarticle}
+\documentclass[ignorenonframetext,unicode,handout, 9pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx,pgf}
+\usepackage{multimedia}
+%\usepackage{hyperref}
+
+%\usetheme{Rochester}  %тема без навигации
+%\usetheme{Montpellier} %тема с навигацией в виде дерева
+%\usetheme{Berkeley} %тема с оглавлением на полях
+%\usetheme{Berlin} %тема с навигацией в виде мини-слайдов
+\mode<presentation>{
+\usetheme{Copenhagen} %тема с таблицей разделов и подразделов
+
+\graphicspath{{pictures/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+%\useinnertheme{circles}   %внутренняя тема
+%\useoutertheme{smoothbars}   %внешняя тема
+\usecolortheme{crane}     %цветовая схема
+\usefonttheme{serif}    %шрифты
+}
+% \\ {} \and \\  \\[3mm]
+\title[Решение жестких задач методом Обрешкова]{Решение жестких задач методом Обрешкова}
+\author[Выполнил: М.Д Зиновьев]{Выполнил: М.Д Зиновьев \and  \\ Науч. руководитель: к.т.н. Котович А.В.}
+\institute{МГТУ имени Н.Э.Баумана (национальный исследовательский университет) \and Кафедра ФН-2(прикладная математика)}
+\date{\today}
+\titlegraphic{\includegraphics[width=2cm]{logo.png}}
+%\setbeamersize{text margin left=4cm}
+
+\begin{document}
+
+
+
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+\section{Постановка задачи}
+
+\begin{frame}{Задача}
+\setbeamercovered{transparent}
+
+Исследовать неявный метод Обрешкова для решения жестких задач, сравнить полученное данным методом решение с решением, полученным явным методом. Провести анализ наблюдаемых явлений и
+сделать выводы о целесообразности исользования неявных методов для решения жестких задач.
+
+\end{frame}
+
+\section[Определение жесткости]{Определение жесткости}
+
+\begin{frame}[t]{Определение жесткости}
+
+Система ОДУ $u' = Au$ с постоянной матрицей $A = A_{m \times m}$ называется жесткой, если:
+\begin{enumerate}
+  \item{все собственные числа матрицы A имеют отрицательную действительную часть, т.е. $Re\lambda_i < 0, i = 1,2,..,m$},
+  \item{число}
+  $$S = \frac{\max\limits_{1 \leqslant k \leqslant m}|Re\lambda_k|}{\min\limits_{1 \leqslant k \leqslant m}|Re\lambda_k|},$$
+  называемое числом жесткости, велико.
+  \end{enumerate}
+
+  \end{frame}
+  \begin{frame}[t]
+
+  В случае задачи Коши для общей нелинейной системы
+\begin{equation}\label{1}
+ u_t =f(t,u), 0 \leqslant t \leqslant T, u(0) = u_0
+\end{equation}
+поведение её решения вблизи некоторой точки $(t_0,u_0)$ определяется матрицей Якоби $A:$
+$$A = \frac{\partial f}{\partial u} =
+\left(
+\begin{array}{ccc}
+\frac{\partial f_1}{\partial u_1} & \ldots & \frac{\partial f_1}{\partial u_m} \\
+\ldots & \ldots & \ldots \\
+\frac{\partial f_m}{\partial u_1} & \ldots & \frac{\partial f_m}{\partial u_m} \\
+\end{array}
+\right).
+$$
+Система называется жесткой, если для всех $t,u$ (т.е. на решениях (\ref{1})), собственные значения матрицы $A$ удовлетворяют следующим условиям:
+$$\frac{\max\limits_i |Re \lambda_i|}{\min\limits_j |Re \lambda_j|} >> 1,$$
+$$Re \lambda_i < 0,$$
+$$\max_i |Im \lambda_i| <<  \max_j |Re \lambda_j|, i,j = 1,2,...,m.$$
+
+\end{frame}
+
+\section[Схемы Обрешкова]{Схемы Обрешкова}
+
+\begin{frame}[t]{Схемы Обрешкова}
+Задача Коши выглядит так:
+\begin{equation}
+\label{ZK}
+ \begin{cases}
+   u_t = f(t,u)\\
+   0 \leqslant t \leqslant T \\
+   u(0) = u_0
+ \end{cases}
+\end{equation}
+Общий вид линейных  многошаговых методов:
+\begin{equation}\label{2}
+\sum\limits_{k=0}^{K}a_k u_{n+k} - \tau b_k f(t_n + k \tau, u_{n+k}), a_K \ne 0.
+\end{equation}
+Добавим  в (\ref{2}) линейную комбинацию вторых производных $u_{tt}$ с коэффициентами $c_k$
+\begin{equation}\label{3}
+\sum\limits_{k=0}^{K}a_k u_{n+k} - \tau b_k f(t_n + k \tau, u_{n+k}) - \tau^2 c_k  u_{tt}(t_n + k \tau, u_{n+k}) = 0.
+\end{equation}
+Используем  выражение для второй производной:
+\begin{equation}\label{VP}
+u_{tt} = f_t = \frac{\partial f}{\partial t} + f_u f.
+\end{equation}
+
+\end{frame}
+\begin{frame}[t]
+
+Получаем
+
+\begin{eqnarray*} \sum\limits_{k=0}^{K}a_k u_{n+k} - \tau b_k f(t_{n+k}, u_{n+k}) - \tau^2 c_k (\partial f(t_{n+k},u_{n+k})/ \partial t + \\
+   + f_u(t_{n+k},u_{n+k}) f(t_{n+k},u_{n+k})) = 0.
+\end{eqnarray*}
+
+
+Условия, обеспечивающие $p-$ый порядок аппроксимации имеют вид схожий с условиями для линейных многошаговых методов:
+\begin{equation}
+\label{UA}
+ \begin{cases}
+   \sum\limits_{k = 0}^{K} a_k = 0,  \sum\limits_{k = 0}^{K}k a_k - b_k = 0,\\
+   \sum\limits_{k = 0}^{K} (k^2 \frac{a_k}{2} - k b_k - c_k) = 0 ,\\
+    \ldots \\
+     \sum\limits_{k = 0}^{K}( k^p \frac{a_k}{p!} - k^{p-1}\frac{ b_k}{(p-1)!} - k^{p-2} \frac{c_k}{(p-2)!} ) = 0.
+ \end{cases}
+\end{equation}
+
+\end{frame}
+
+\section{Устойчивость схем Обрешкова}
+
+\begin{frame}[t]{Устойчивость схем Обрешкова}
+Из условий порядка (\ref{UA}) следует, что схема с коэффициентами:
+$$ a_0 = -1, a_1 = 1, b_0 = \frac{1}{2}, b_1 = \frac{1}{2}, c_0 = \frac{1}{12}, c_1 = \frac{1}{12}$$
+даёт четвертый порядок аппроксимации. Воспользуемся модельным уравнением $u' = \lambda u,$ (обозначение $\lambda \tau = \sigma$), тогда получаем \\
+$$u_t = f = \lambda u,$$
+$$u_{tt} = f_t = \lambda u_t =  \lambda^2 u,$$
+$$\sum\limits_{k=0}^{K}(a_k - \sigma b_k - \sigma^2 c_k)u_{n+k} =  \sum\limits_{k=0}^{K}\gamma_{k} u_{n+k} = 0, \qquad   \gamma_k = a_k - \sigma b_k - \sigma^2 c_k.$$
+$$u_{n+1} = q u_{n},$$
+$$q = -\frac{\gamma_0}{\gamma_1} = \frac{1 + \sigma(1/2 + c_0 + c_1) + \sigma^2 c_0}{1 - \sigma(1/2 - c_0 - c_1) - \sigma^2 c_1}.$$
+
+\end{frame}
+
+\begin{frame}[t]
+\begin{figure}[htbp]
+\center{\includegraphics[scale=0.27]{Ris1}}
+\text{Рис.1. Схемы Обрешкова в плоскости неопределённых коэффициентов (K=1)}
+\label{fig:image}
+\end{figure}
+\end{frame}
+
+
+\section[Простейшая модель гликолиза]{Простейшая модель гликолиза}
+
+\begin{frame}[t]{Простейшая модель гликолиза}
+Рассмотрим простейшую модель гликолиза, предложенную Дж. Хиггинсом
+\begin{equation}
+\label{GL}
+ \begin{cases}
+   \dot{y}_1 = 1 - y_1 y_2, \\
+   \dot{y}_2 = \alpha y_2 \bigg( y_1 = \frac{1 + \beta}{y_2 + \beta} \bigg), \\
+   y_1(0) = 1, \qquad y_2(0) = 0.001, \qquad T_k = 50, \\
+   \beta = 10, \qquad \alpha = 100.
+ \end{cases}
+\end{equation}
+\end{frame}
+
+
+\begin{frame}[t]
+\begin{figure}[htbp]
+\center{\includegraphics[scale=0.4]{RK4}}
+\text{Рис.2. Фазовая траектория, полученная при решении методом Рунге---Кутты $4$-ого порядка}
+\label{fig:image}
+\end{figure}
+\end{frame}
+
+\begin{frame}[t]
+\begin{figure}[htbp]
+\center{\includegraphics[scale=0.38]{FT}}
+\text{Рис.3. Фазовая траектория, полученная при решении методом Обрешкова $4$-ого порядка}
+\label{fig:image}
+\end{figure}
+\end{frame}
+
+\begin{frame}[t]
+\begin{figure}[htbp]
+\center{\includegraphics[scale=0.38]{PC}}
+\text{Рис.4. Предельный цикл фазовых траекторий, полученный при решении методом Обрешкова $4$-ого порядка}
+\label{fig:image}
+\end{figure}
+\end{frame}
+
+\section{Вывод}
+\begin{frame}{Вывод}
+В работе была рассмотрена простейшая модель гликолиза, было показано, что эта задача является жесткой и требует использования неявных методов. Был рассмотрен и исследован метод Обрешкова. Было выяснено, что данный класс схем более обширный, чем класс линейных многошаговых схем и позволяет достигнуть более высокой точности на меньшем числе точек шаблона.
+\end{frame}
+\end{document}

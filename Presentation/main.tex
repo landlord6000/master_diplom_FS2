@@ -1,0 +1,1565 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[cp1251]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+\usepackage{hyperref}
+
+\usepackage[footnotes,oglav,spisok,boldsect,eqwhole,figwhole,kursrab,remarks,hyperprint]{project_cp}
+
+\frenchspacing
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathenv}
+\usepackage{graphicx}
+
+\parindent=1cm
+
+\setcounter{equation}{0}
+
+\numberwithin{equation}{section}
+\numberwithin{equation}{subsection}
+%\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+
+\graphicspath{{pictures/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\begin{document}
+%\cover{}{Периодические решения уравнения колебания балки с жестко закрепленным концом.}{студент группы ФН2-31М}{Зиновьев М.Д}{д.ф.-м.н., профессор кафедры ФН2}{Рудаков И.А}{}{}{2021}
+
+\thispagestyle{empty}
+
+\begin{minipage}{0.05\textwidth}
+	\hspace{-1.4cm}\vspace{0.5cm}\includegraphics[scale=0.1]{emblema.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.95\textwidth}
+	\centering
+	\linespread{1.0}
+	\fontsize{11}{14pt}\selectfont
+	\textbf{Министерство образования и науки Российской Федерации \\
+	Федеральное государственное бюджетное образовательное учреждение\\высшего профессионального образования\\%
+	<<Московский\ государственный\ технический\ университет\\ имени\ Н.\,Э.\,Баумана\\(национальный исследовательский университет)>>\\(МГТУ им. Н.\,Э.\,Баумана)}\\[3mm]
+\end{minipage}
+\hrule height .7mm
+
+\bigskip
+
+\noindentФАКУЛЬТЕТ <<Фундаментальные науки>> \\
+КАФЕДРА <<Прикладная математика>>
+
+\bigskip
+
+\begin{center}
+	\begingroup
+	\fontsize{20pt}{20pt}\selectfont
+	\textbf{РАСЧЁТНО-ПОЯСНИТЕЛЬНАЯ ЗАПИСКА} \\
+	\fontsize{16pt}{20pt}\selectfont
+	\textbf{\textit{К~ВЫПУСКНОЙ~КВАЛИФИКАЦИОННОЙ~РАБОТЕ}}\\
+	\textbf{\textit{НА ТЕМУ:}}
+	
+	\medskip
+	
+	\fontsize{16pt}{20pt}\selectfont \textbf{\textit{\underline{ПЕРИОДИЧЕСКИЕ РЕШЕНИЯ} \underline{УРАВНЕНИЯ КОЛЕБАНИЯ БАЛКИ} \underline{С ЖЕСТКО ЗАКРЕПЛЕННЫМ КОНЦОМ}}}
+	\endgroup
+\end{center}
+
+\bigskip
+
+\noindent
+\begin{tabular}{lp{6em}cl}
+	Студент группы ФН2-81 & & \hspace{3.5cm}                                & М.Д. Зиновьев\\ \cline{3-3}
+	                      & & \fontsize{8pt}{8pt}\selectfont(Подпись, дата) &\\
+	Руководитель ВКР      & & \hspace{3.5cm}                                & И.А. Рудаков\\ \cline{3-3}
+	                      & & \fontsize{8pt}{8pt}\selectfont(Подпись, дата) &\\
+	Нормоконтролер        & & \hspace{3.5cm}                                & М.М. Лукашин\\ \cline{3-3}
+	                      & & \fontsize{8pt}{8pt}\selectfont(Подпись, дата) &\\
+\end{tabular}
+
+\vspace*{\fill}
+
+\begin{center}
+	2020 г.
+\end{center}
+
+\section-{АННОТАЦИЯ}
+
+Расчётно-пояснительная записка 64 с., 2 рис., 11 источников.
+
+Объектом исследования является квазилинейное уравнение Эйлера---Бернулли. Метод исследования --- использование аппарата нелинейного  функционального анализа
+
+Цель работы --- получить условия существования, несуществования и единственности периодического решения уравнения, в случаях когда нелинейное слагаемое удовлетворяет условию нерезонансности на бесконечности, или когда разность между ним и линейной функцией представляет собой ограниченную функцию, причем коэффициент линейной функции совпадает с собственным значением дифференциального оператора.
+
+Поставленная цель достигается с помощью методов: малого параметра, компактности, монотонности и принципа Лере---Шаудера о неподвижной точке
+
+\tableofcontents
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[][Введение]{Введение}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Во многих физических задачах, связанных с процессами колебаний, возникаают квазилинейные эволюционные уравнения. В данной работе рассматривается квазилинейное уравнение Эйлера---Бернулли, описывающее процессы колебаний проводов, стержня, способного сопротивлятся изгибу и двутавровых балок:
+\begin{equation}\label{equationkv}
+  u_{tt} + u_{xxxx} - au_{xx} = g(x, t, u) + f(x,t), \; x \in (0,\pi), \; t \in \textbf{R}
+\end{equation}
+с однородными граничными условиями на отрезке
+\begin{equation}\label{ickv1}
+  u(0,t) = u_{x}(0,t) = 0, \; t \in \textbf{R}  \\
+  \end{equation}
+\begin{equation}\label{ickv2}
+  u(\pi,t) = u_{x}(\pi,t) = 0, \; t \in \textbf{R}
+\end{equation}
+и с условием периодичности по времени
+\begin{equation}\label{periodkv}
+ u(x,t + T) = u(x,t), \; 0 < x < \pi , \; t \in \textbf{R}.
+\end{equation}
+Если внешняя сила $f$ и нелинейное слагаемое $g$ периодичны по времени с периодом $T$, то возникает задача о доказательстве существования $T-$периодических по времени решений
+
+Начиная с семидесятых годов 20-го века вышло большое число работ, посвященных задачам о периодических и квазипериодических решениях нелинейных эволюционных уравнений, таких как волнове уравнение и уравнение Эйлера---Бернулли. В этих статьях были доказаны теоремы о существовании периодических решений для волнового уравнения с постоянными и переменными коэффициентами. В целом для данных задач было разработано множество методов.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[][Постановка задачи]{Постановка задачи}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Рассматривается квазилинейное уравнение вынужденных колебаний двутавровой балки (\ref{equationkv}). С граничными условиями ((\ref{ickv1}), (\ref{ickv2}).
+
+Цель первой чаасти работы --- получить условия существования, несуществования и единственности периодического решения задачи (\ref{equationkv}) -- (\ref{periodkv}), в случаях когда нелинейное слагаемое удовлетворяет условию резонансности и нерезонанстности на бесконечности.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[][Линейное уравнение]{Линейное уравнение}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Рассмотрим линейное уравнение:
+
+\begin{equation}\label{equation}
+  u_{tt} + u_{xxxx} - au_{xx} =  f(x,t), \; x \in (0,\pi), \; t \in \textbf{R}
+\end{equation}
+с однородными граничными условиями на отрезке
+\begin{gather}\label{ic}
+  u(0,t) = u_{x}(0,t) = 0, \; t \in \textbf{R}  \\
+  u(\pi,t) = u_{x}(\pi,t) = 0, \; t \in \textbf{R}
+\end{gather}
+и с условием периодичности по времени
+\begin{equation}\label{period}
+ u(x,t + T) = u(x,t), \; 0 < x < \pi , \; t \in \textbf{R}.
+\end{equation}
+Проведем исследование для линейного случая, чтобы в дальнейшем использовать его для квазилинейного случая, в частности построим ортонормированный базис.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Задача Штурма-Лиувилля, соответствующая случаю закрепления концов]{Задача Штурма-Лиувилля, соответствующая случаю закрепления концов}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Уравнению (\ref{equation}) соответствует следующая задача Штурма-Лиувилля на поиск собственных значений.
+
+Рассмотрим задачу Штурма---Лиувилля на поиск собственных  значений оператора уравнения (\ref{equation}). Любое нетривиальное решение задачи  Штурма---Лиувилля называется собственной функцией $X(x)$, а определенные  при этом значения параметра $\lambda$ --- собственными значениями
+
+\begin{equation}\label{task}
+  X'''' - a X'' = \lambda X, x \in (0,\pi),\; a > 0
+\end{equation}
+с граничными условиями
+\begin{gather}
+  X(0) = X'(0) =0  \label{bc1}, \\
+  X(\pi) = X'(\pi) = 0 \label{bc2}.
+\end{gather}
+Покажем положительность $\lambda$, для это домножим обе части на $X$ и возьмем интеграл от обеих частей исходного уравнения. \\
+\begin{equation*} \int\limits_{0}^{\pi}X'''' Xdx - a\int\limits_{0}^{\pi}X''Xdx = \lambda \int\limits_{0}^{\pi}X^{2}dx.  \end{equation*}
+В правой части $\lambda$ умножается на положительное число. Оценим левую часть и убедимся, что она тоже положительна.
+\begin{gather*}
+\int\limits_{0}^{\pi}X''X dx = X'X \bigg|_{0}^{\pi} - \int\limits_{0}^{\pi}X'X'dx = -\int\limits_{0}^{\pi}X'^{2} < 0   \\
+\int\limits_{0}^{\pi}X''''X dx = XX''' \bigg|_{0}^{\pi}-\int\limits_{0}^{\pi}X'X'''dx = -X''X' \bigg|_{0}^{\pi} - \int\limits_{0}^{\pi}X''X''dx = \int\limits_{0}^{\pi}X''^{2} > 0
+\end{gather*}
+
+\begin{equation*}
+ \int\limits_{0}^{\pi}X''^{2}dx + a\int\limits_{0}^{\pi}X'^{2}dx = \lambda \int\limits_{0}^{\pi}X^{2}dx .
+\end{equation*}
+
+Отсюда следует, что $\lambda \geqslant 0 $, докажем, что $\lambda \ne 0$. Если $\lambda = 0 $, значит  левая часть  уравнения (\ref{task}) равняется нулю.
+\begin{equation}\label{22}
+  \int\limits_{0}^{\pi}X''^{2}dx + a\int\limits_{0}^{\pi}X'^{2}dx = 0.
+\end{equation}
+
+Это равенство выполняется если функция $X$ --- тождественный ноль. Нас интересуют тоьлко нетривиальный случай, следовательно $\lambda>0$
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Вывод трансцендентного уравнения для поиска собственных значений]{Вывод трансцендентного уравнения для поиска собственных значений}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Решим исходное уравнение (\ref{task}) - (\ref{bc2})
+\begin{equation}
+  X'''' - a X'' = \lambda X, \; x \in (0,\pi),\; a > 0.
+\end{equation}
+Составим и решим характеристическое уравнение
+\begin{gather*}
+k^4-ak^2-\lambda=0,  \\
+D = a^2+4 \lambda = 0,  \\
+k^2 = \frac 1 2 (a-\sqrt{a^2+4\lambda}) < 0,  \\
+k^2 = \frac 1 2 (a+\sqrt{a^2+4\lambda}) > 0.
+\end{gather*}
+Произведем замену, для упрощения вычислений
+
+\begin{gather}
+-y^2 = \frac 1 2 (a-\sqrt{a^2+4\lambda}), \label{b}   \\
+z^2 = \frac 1 2 (a+\sqrt{a^2+4\lambda}),\label{c}   \\
+k^2 = z^2, \; k^2 = -y^2,\notag \\
+k_1 = z, \; k_2 = -z, \; k_3 = iy, \; k_4 = -iy,  \notag \\
+y = \sqrt{\frac 1 2 (\sqrt{a^2+4\lambda}-a)}, \; z = \sqrt{\frac 1 2 (a+\sqrt{a^2+4\lambda})}.  \label{bc}
+\end{gather}
+В качестве фундаментальной системы решений возьмем
+$$\{\ch(zx), \; \sh(zx), \; \cos(yx), \; \sin(yx)\}, $$
+общий вид частного решения можно представить как
+\begin{equation}\label{132}
+ X = C_1\ch(zx)+C_2\sh(zx)+C_3\cos(yx)+C_4\sin(yx).
+ \end{equation}
+Из первых граничных условий (\ref{bc1}) следует, что
+\begin{equation*}
+ \begin{cases}
+   X(0) = C_1 + C_3 = 0\\
+   X'(0) = C_2 z + C_4 y = 0
+ \end{cases}
+\end{equation*}
+Тогда уравнение (\ref{132}) примет вид
+\begin{equation*}
+ X = C_1(\ch(zx) - \cos(yx)) + C_2(\sh(zx) - \frac z y \sin(yx)).
+ \end{equation*}
+Из (\ref{bc2}) следует, что
+\begin{equation*}
+ \begin{cases}
+   X(\pi) = C_1(\ch(z \pi) - \cos(y \pi)) + C_2(\sh(z\pi) - \frac z y \sin(y \pi)) = 0\\
+   X'(\pi) = C_1(z \sh(z \pi) + y \sin(y \pi)) + C_2(z \ch(z \pi) - z \cos(y \pi)) = 0
+ \end{cases}
+\end{equation*}
+Эта система имеет решения относительно $C_1, C_2$ тогда и только тогда, когда ее определитель равен нулю, выпишем это условие
+\begin{equation*}
+  (\ch(z \pi) - \cos(y \pi))\cdot(z \ch(z \pi) - z \cos(y \pi)) - (\sh(z\pi) - \frac z y \sin(y \pi))\cdot(z \sh(z \pi) + y \sin(y \pi)) = 0
+\end{equation*}
+После преобразований получим следующее уравнение
+\begin{equation}\label{tre}
+  \cos(y \pi) = \frac{1}{\ch(\pi z)} +\frac{a \sin(\pi y) \th(\pi z)}{2yz}
+\end{equation}
+После подстановки в него выражений для $y(\lambda), z(\lambda)$ получим трансцендентное уравнение относительно $\lambda$.
+Собственные функции можно представить ввиде:
+\begin{equation}\label{Xn}
+  X = C_1(\ch(zx) - \cos(yx)) + C_2(\sh(zx) - \frac z y \sin(yx)), \;\; C_1, C_2 \in \mathbb{R}
+\end{equation}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Локализация собственных значений]{Локализация собственных значений}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Выразим для начала $\lambda$ из (\ref{bc})
+\begin{equation}\label{lam}
+  \lambda = y^4  + a y^2
+\end{equation}
+Покажем, что найдется такое $n_0 \in \textbf{N}$, что для любого натурального $n \geqslant n_0$ на интервале $(n, n+\frac 1 2)$ существует единственный корень $y_n$ уравнения (\ref{tre}), а на отрезке $[n+\frac 1 2, n+1]$ уравнение не имеет решений. Рассмотрим функцию
+\begin{equation}
+  H(y) = \frac{1}{\ch(z\pi)} +\frac{a \sin(y \pi ) \th(z \pi )}{2yz} - \cos(y \pi)
+\end{equation}
+Для любого натурального $n$ справедливы неравенства:
+\begin{gather}
+  H(2n) = \frac{1}{\ch(z\pi)} - 1  < 0\\
+  H\bigg(2n+ \frac 1 2\bigg) = \frac{1}{\ch(z \pi)} + \frac{a}{2c(2n + \frac 1 2)} \th(z \pi) > 0
+\end{gather}
+Из этого следует, что на интервале $(2n,2n+\frac 1 2)$ существует корень уравнения (\ref{tre}). Также имеем следующие соотношения:
+\begin{equation}
+%у марцинович опечатка H(2n-1)=-1 + \frac{1}{\ch(z\pi)}
+  H(2n-1)=\frac{1}{\ch(z\pi)} + 1 > 0
+\end{equation}
+\begin{equation}
+  H\bigg(2n-\frac 1 2\bigg) = \frac{1}{\ch(z \pi)} - \frac{a}{2c(2n - \frac 1 2)} \th(z \pi) > 0
+\end{equation}
+Существует такое $n_1 \in \textbf{N}$, что для любого натурального $n > n_1$ $H(2n-\frac 1 2) < 0$. Значит для любого $n > n_1$ на интервале $(2n-1,2n-\frac 1 2)$ существует корень уравнения (\ref{tre}). Рассмотрим отрезок $b \in [2n+\frac 1 2, 2n+1]$, для любого натурального $n$ справедливо, что $\sin(b \pi) \geqslant 0, \; \cos(b \pi) \leqslant 0$, следовательно $H(b) >0$, значит на этом промежутке уравнение (\ref{tre}) не имеет решений.
+Осталось доказать, что уравнение не имеет решений на промежутке $[2n-\frac 1 2, 2n]$. Существует такое $n_2 \in \textbf{N}$, что для любого натурального $n \geqslant n_2$ выполнены равенства:
+\begin{equation}
+    \th(z \pi) \geqslant 0, \;\; \ch(z \pi) \geqslant 0, \;\; \frac{1}{\ch(z \pi)} \leqslant \frac{a}{4bc}
+\end{equation}
+Расммотрим два промежутка: $[2n-\frac 1 2, 2n-\frac 1 4]$ и $[2n-\frac 1 4, 2n]$. На первом промежутке выполнено:
+\begin{equation}
+  H(y) \leqslant \frac{1}{\ch(z\pi)} + \frac{a}{2bc}\sin(y \pi)\th(z \pi) \leqslant \frac{a}{4bc} -\frac{a}{2bc}\cdot\frac{3\sqrt{2}}{8} \leqslant \frac{a}{4bc}\bigg(1-\frac{3\sqrt{2}}{4}\bigg) < 0
+\end{equation}
+На втором промежутке:
+\begin{equation}
+  H(y) \leqslant \frac{1}{\ch(z\pi)} - \cos(y \pi) \leqslant \frac 1 2 - \frac{\sqrt{2}}{2} < 0
+\end{equation}
+Значит для любого $n > n_2$ на всем промежутке $y \in [2n-\frac 1 2, 2n-\frac 1 4]$ уравнение (\ref{tre}) не имеет решений.
+Покажем единственность решения данного уравнения на интервале $(n, n+\frac 1 2)$ при достаточно больших $n$, положим $n_3 = \max(n_1, n_2)$. Для любого натурального $n > n_3$ корень $y \in (n, n+\frac 1 2)$  уравнения (\ref{tre}) представляется ввиде:
+\begin{equation}
+  y = n+\frac 1 2 - \rho, \;\; \rho \in (0,1/2)
+\end{equation}
+Используя полученное соотношение, уравнение (\ref{tre}) можно привести к виду:
+\begin{equation}
+  \sin(\rho \pi) = \frac{(-1)^n}{\ch(z\pi)} + a \cos(\rho \pi)\th(z \pi)\frac{1}{yz}
+\end{equation}
+Отсюда следует, что $\rho \rightarrow 0$ при $n \rightarrow \infty$. Для производной $H'$ имеем следующее предстваление:
+\begin{equation}
+  H'(y) = \pi \sin(y \pi) + \psi(y),
+\end{equation}
+где $\psi(y) = O(\frac{1}{y^2})$ при $y \rightarrow \infty$. Значит найдется такое натуральное $n_4 > n_3$, что для любого натурального $n > n_4$
+\begin{equation}
+  |H'(y)| \geqslant \frac{\sqrt{2}\pi}{2} - |\psi(y)| > 0 \;\; \forall y \in [n+1/4, n + 1/2]
+\end{equation}
+Значит при $n > n_4$ на каждом интервале $(n, n+1/2)$ уравнение (\ref{tre}) имеет единственный корень $y_n$:
+\begin{equation}
+  y_n = n + \frac 1 2 - \rho_n
+\end{equation}
+Получим из (\ref{lam}) следующий вид собственных значений:
+\begin{equation}
+  \lambda_n = (n + \frac 1 2 - \rho_n)^4 + a(n + \frac 1 2 - \rho_n)^2, \;\; \rho_n \in (0, 1/2)
+\end{equation}
+
+%Получим оценку для параматера $\theta_n$. Умножим уравнение (\ref{tre}) на $\theta_n/ \cos(\pi b_n)$ и получим неявное выражение для $\theta_n$
+%\begin{equation}\label{theta}
+%  \theta_n = (-1)^{n+1} \frac{\pi \theta_n}{\sin(\pi \theta_n)}\frac{1}{\ch(\pi c_n)} - \frac{a}{2\pi b_n c_n}\th(\pi c_n) \cos(\pi %\theta_n)\frac{\pi \theta_n}{\sin(\pi \theta_n)}
+%\end{equation}
+%Левое слагаемое в формуле (\ref{theta}) стремится к нулю с экспоненциальной скоростью, правое со скоростью степенной функции, следовательно %$\theta_n$ стремится к нулю и принимает отрицательные значения.
+%Рассмотрим функцию $h(t) = t/\sin{t}$. Производная этой функции:
+%\begin{equation}
+ % h'(t) = \frac{\sin{t} - t \cos{t}}{\sin^2{t}} = \frac{\cos{t}(\tg{t}-t)}{\sin^2{t}}.
+%\end{equation}
+%Рассмотрим промежуток $t \in (0; \pi/2]$, покажем, что на этом промежутке функция $\tg{t} - t > 0$. Ддя этого возьмем проивзодную
+%\begin{equation}
+%  (\tg{t} - t)'  = \frac{1}{\cos^2{t}} - 1 > 0, t \in  (0; \frac{\pi}{2}
+%\end{equation}
+%Таким образом, $\tg{t} - t$ возрастает и положительная на промежутке $(0; \pi/2)$, а в нуле принимает значение 0, следовательно $h(t) > 0$ при $t \in %(0 ; \pi/2)$. Значит, для всех $t \in (0; \pi/2]$ имеет место неравенство $1 \leqslant h(t) < \frac{\pi}{2}$, поэтому $1 < \pi\theta_n/\sin(\pi %\theta_n) < \pi/2$ для любого $n$ Отсюда следует оценка:
+%\begin{equation}\label{thet}
+% \exists \; n_0 \in \mathbb{N}, \;\;\; C_1,C_2 \in \mathbb{R}: \;\; \forall n > n_0  \;\; \frac{C_1}{n^2}  \leqslant \theta_n \leqslant  \frac{C_2}{n^2}
+%\end{equation}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Оценка $\rho_n$]{Оценка $\rho_n$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Решения уравнения (\ref{tre}) представимы в виде:
+\begin{equation}
+    y_n = n + \frac 1 2 - \rho_n
+\end{equation}
+Покажем, что $\rho_n > 0$, для этого домножим уравнение (\ref{tre}) на $\frac{\rho_n}{\cos(y_n \pi)}$, тогда получим
+\begin{equation}\label{eq1}
+    \rho_n = \frac{\rho_n}{\ch(\pi\sqrt{y_n^2 + a}) \cos(z_n \pi)} + \frac{a \sin{b_n \pi} \th{\pi sqrt{y_n^2 + a}}\rho_n}{2 y_n \cos{\pi b_n}\sqrt{y_n^2 + a}}.
+\end{equation}
+Учтем, что
+\begin{multline}
+  \cos{\pi b_n}  = \cos{\pi(n + \frac 1 2 + \rho_n)} = cos \bigg( \frac{\pi}{2} + \pi n + \pi \rho_n \bigg) = -\sin(\pi n + \pi \rho_n) = \\
+  = -\cos{\pi n} \sin{\pi \rho_n} = (-1)^{n+1} \sin{\pi \rho_n}
+\end{multline}
+
+\begin{multline}
+  \sin{\pi y_n} = \sin{\pi(n + \frac 1 2 + \rho_n)} = sin \bigg( \frac{\pi}{2} + \pi n + \pi \rho_n \bigg) = \cos(\pi n + \pi \rho_n) = \\
+  = -\cos{\pi n} \sin{\pi \rho_n} = (-1)^{n} \cos{\pi \rho_n}
+\end{multline}
+
+Тогда, выражение (\ref{eq1}) примет вид
+\begin{multline}
+  \rho_n = \frac{\rho_n}{\ch{\pi\sqrt{y_n^2 + a}}(-1)^{n+1}\sin{\pi \rho_n}} + \frac{a(-1)^n \cos{pi \rho_n}\th{\pi\sqrt{y_n^2+a}}\rho_n}{2 y_n\sqrt{y_n^2 + a}(-1)^{n+1}\sin{\pi \rho_n}} = \\
+  = (-1)^{n+1} \frac{\pi \rho_n}{\sin{\pi \rho_n}}\cdot \frac{1}{\pi \ch{\pi\sqrt{y_n^2 + a}}}  - \frac{a \cos{pi \rho_n}\th{\pi\sqrt{y_n^2+a}}}{2\pi y_n\sqrt{y_n^2 + a}} \cdot \frac{\pi \rho_n}{\sin{\pi \rho_n}}
+\end{multline}
+
+Докажем, что существуют такие $c_{0}, c_{1} > 0$, что $0 < c_{0} \frac{1}{n^{2}} < \rho_{n} < c_{1}\frac{1}{n^{2}}$. Сначала оценим сверху. Очевидно, что $th(\rho_{n})< 1$. Далее рассмотрим функцию
+\[
+f(t) =
+\begin{cases}
+\frac{t}{\sin{t}}, t \in [\frac{-\pi}{2},0)\cup (0,\frac{\pi}{2}] \\
+1 , \hspace{0.45cm}   t = 0
+\end{cases}
+\]
+$$f'(t) = \frac{\sin{t}-t \cos{t}}{\sin^{2}{t}} = \frac{\cos{t}(tg(t)-t)}{\sin^{2}{t}} $$
+Покажем, что $tg(t)>t$ при $t \in (0,\frac{\pi}{2}]$. Посчитаем производную функции $P(t) = tg(t) - t$ и наложим условие $P'(t) > 0$
+$$P'(t) = \frac{1}{\cos^{2}(t)}-1 > 0$$
+$$\cos^{2}(t) < 1$$
+Это выполняется на всем промежутке $t \in (0,\frac{\pi}{2}]$, значит функця $tg(t) - t$ имеет положительную проиводную на всем промежутке $(0,\frac{\pi}{2}]$, в нуле принимает значение ноль, следовательно возрастает и  положительна на всем промежутке. Значит
+$$P(t) = \frac{\sin{t}-t \cos{t}}{\sin^{2}{t}} > 0,\hspace{0.2cm} \text{при}\hspace{0.2cm} t \in (0; \frac{\pi}{2}\big]  $$
+Исходная функция при $t$, стремящемся к $0$ имеет предел $\lim\limits_{t \to 0} \frac{t}{\sin{t}} = 1$, а в точке $t = \frac{\pi}{2}$ принимает значение $f(\frac{\pi}{2}) =\frac{\pi}{2}$. Следовательно, функцию $f(t)$ можно оценить как:
+\begin{equation} 1 \leqslant \frac{t}{\sin{t}} \leqslant \frac{\pi}{2} \notag \end{equation}
+\begin{equation*}
+|\rho_{n}| \leqslant \frac{\pi}{2} \frac{1}{ch(\pi c_{n})} + \frac{\pi}{4} \frac{a}{\pi b_{n} c_{n}} = \frac{\pi}{2}\Bigr(\frac{1}{ch(\pi c_{n})} + \frac{a}{2\pi b_{n} c_{n}}\Bigr)
+ \end{equation*}
+Из ($\ref{bc}$) получим ооценку $b_{n}c_{n}$
+$$b_{n}c_{n} = \sqrt{\frac{1}{4}(a^{2}+4\lambda_{n}-a^{2})} = \sqrt{\lambda_{n}} = \sqrt{(n+\frac{1}{2}- \rho_{n})^{4} + a(n+\frac{1}{2}-\rho_{n})^{2}} \geqslant (n + \frac{1}{2} - \rho_{n})^{2} \geqslant n^{2}$$
+$$\frac{1}{b_{n}c_{n}} \leqslant \frac{1}{n^{2}}$$
+$$ |\rho_{n}| \leqslant \frac{\pi}{2}\Bigr(\frac{1}{ch(\pi c_{n})} + \frac{a}{2\pi n^{2}}\Bigr) $$
+$$\frac{1}{ch(\pi c_{n})} = \frac{2}{e^{\pi c_{n}}+e^{-\pi c_{n}}} < \frac{2}{e^{\pi c_{n}}}$$
+Докажем, что $\frac{1}{e^{x}} < \frac{2}{x^{2}}$. Рассмотрим функцию $Q(x) = e^{x} - \frac{x^{2}}{2}$, возьмем ее первую и вторую производные
+$$Q'(x) = e^{x} - x$$
+$$Q''(x) = e^{x} - 1$$
+Вторая производная положительная при всех $x > 0$, значит $Q'(x)$ возрастает на этом интервале, а так как в нуле она принимает значение $Q'(0) = 1$, то она положительна на все положительной полуоси. А значит исходная функция возрастает при $x > 0$, но в нуле $Q(0) = 1$, значит и исходная функция положительна.
+$$ |\rho_{n}| \leqslant \frac{1}{\pi c^{2}_{n}} + \frac{a}{2\pi n^{2}} $$
+Оценим $c_{n}$.
+$$ c_{n} = \sqrt{\frac{1}{2}(a^{2}+4\lambda_{n})} > \sqrt[4]{\frac{1}{2}-4\lambda_{n}} > \sqrt[4]{\lambda_{n}} > n$$
+Отсюда получаем финальную оценку сверху $\rho_{n}$
+\begin{equation} |\rho_{n}| \leqslant \frac{2}{\pi n^{2}} + \frac{a}{2\pi n^{2}}  = \frac{1}{n^{2}}\Bigr(\frac{2}{\pi}+\frac{a}{2\pi}\Bigr) \label{verh} \end{equation}
+Теперь оценим снизу. Используем, то, что
+\begin{equation*}
+\frac{\pi \rho_{n}}{\sin(\pi \rho_{n})} \geqslant 1 \\
+\end{equation*}
+Оценим $cos(\pi \rho_{n})$. Его аргумент стремится к нулю, следовательно сама функция возрастает, стремясь к единице, $\forall \varepsilon: \hspace{0.2cm}1 >\varepsilon > 0 \hspace{0.2cm} \exists n_{0} : \forall n > n_{0} \hspace{0.2cm}  \cos(\pi\rho_{n}) > 1 - \varepsilon $ значит мы можем оценить ее снизу константой
+$$ cos(\pi \rho_{n}) \geqslant d $$
+Так же и с $th(\pi c_{n})$. При стремлении его аргумента к бесконечности, он стремится к единице, $\forall \varepsilon: \hspace{0.2cm}1 >\varepsilon > 0 \hspace{0.2cm} \exists n_{0} : \forall n > n_{0} \hspace{0.2cm} th(\pi c_{n}) > 1 - \varepsilon $ значит его тоже можно оценить снизу константой
+$$ th(\pi c_{n}) \geqslant g $$
+Отсюда получаем:
+$$ |\rho_{n}| \geqslant \frac{a\cdot g\cdot d}{2\pi b_{n} c_{n}} - \frac{1}{ch(\pi c_{n})}$$
+\begin{multline*}
+b_{n} c_{n} = \sqrt{(n+\frac{1}{2}- \rho_{n})^{4} + a(n+\frac{1}{2}-\rho_{n})^{2}} \leqslant \sqrt{(a+1)(n+\frac{1}{2}-\rho_{n})^{4}} = \\
+= \sqrt{a+1}\cdot (n + \frac{1}{2} - \rho_{n})^{2} \leqslant  \sqrt{a+1}\cdot(2n)^{2}
+\end{multline*}
+$$\frac{1}{b_{n} c_{n}} \geqslant \frac{1}{4\sqrt{a+1} n^{2}} $$
+Имеем:
+\begin{equation*}
+|\rho_{n}| \geqslant \frac{a\cdot g\cdot d}{8\sqrt{a+1} n^{2}} - \frac{1}{ch(\pi c_{n})}
+ \end{equation*}
+Оценим $ch(\pi c_{n})$
+$$\frac{1}{ch(\pi c_{n})} = \frac{2}{e^{\pi c_{n}}+e^{-\pi c_{n}}} \geqslant \frac{1}{e^{\pi c_{n}}}$$
+Обозначим $A = \frac{a\cdot g\cdot d}{8\sqrt{a+1}}$ и покажем, что $\exists n_{0}: \forall n > n_{0} \hspace{0.2cm} e^{\pi c_{n}} > \frac{2}{A}n^{2}$
+$$ e^{\pi c_{n}} = e^{\pi\sqrt{\frac{1}{2}a+\sqrt{a^{2}+4(n+\frac{1}{2}-\rho_{n})^{4}+a(n+\frac{1}{2}-\rho_{n})^{2}}}} \geqslant e^{\pi n} $$
+$$e^{\pi n} > \frac{2}{A}n^{2} $$
+\begin{equation}\label{e}
+e^{\pi n_{0}} > \frac{2}{A}n_{0}^{2}
+\end{equation}
+Докажем, что $\exists n_{0}$ такое, что $(\ref{e})$ выполняется для $\forall n \geqslant n_{0}$. Рассмотрим функцию $R(n) = ln(e^{\pi n}  - \frac{2}{A}n^{2}) = \pi n - ln(\frac{2}{A})-ln(n^{2})$ и докажем исходное утверждение.
+$$ \pi n - 2 ln(n)  > ln(\frac{2}{A})$$
+Линейная функция имеет более высокий порядок роста, чем логарифмическая, значит $\forall A$ $  \exists n_{0} \in \mathbb{N}:$ $ \forall n > n_{0}$ $ e^{\pi n} > \frac{2}{A}n^{2} $ \\
+Значит
+\begin{equation}
+|\rho_{n}| \geqslant \frac{a\cdot g\cdot d}{8\sqrt{a+1} n^{2}} \label{niz}
+ \end{equation}
+Из верхней и нижней $(\ref{verh}),(\ref{niz})$ оценок получаем финальную:
+$$ \exists n_{0} \in \mathbb{N},\hspace{0.4cm} \exists c_{1},c_{2} \in \mathbb{R} :\hspace{0.4cm} \forall n > n_{0} \hspace{0.4cm} \frac{c_{1}}{n^{2}} \geqslant |\rho_{n}| \geqslant \frac{c_{2}}{n^{2}} $$
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Свойства собственных функций]{Свойства собственных функций}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Докажем, что любые две собственые функции $X_n$ и $X_m$ ортогональны в пространстве $L_{2}[0;\pi]$, т.е, что:
+$$\int\limits_{0}^{\pi}X_{n}(x)X_{m}(x)dx = 0 $$
+
+Рассмотрим интеграл
+\begin{equation} \lambda_{n} \int\limits_{0}^{\pi}X_{n}X_{m}dx = \int\limits_{0}^{\pi}(X_{n}^{(4)}-a X_{n}^{''})X_{m}dx = \int\limits_{0}^{\pi}X_{n}^{(4)}X_{m}dx - a \int\limits_{0}^{\pi}X_{n}^{''}X_{m}dx \label{8}\end{equation}
+\begin{multline}
+  \int\limits_{0}^{\pi}X_{n}^{(4)}X_{m}dx = X_{n}^{'''}X_{m}\bigg|_{0}^{\pi} - \int\limits_{0}^{\pi}X_{n}^{'''}X_{m}^{'}dx = -(X_{n}^{''}X_{m}^{'}\bigg|_{0}^{\pi} - \int\limits_{0}^{\pi}X_{n}^{''}X_{m}^{''}dx) = \\
+   = X_{n}^{'}X_{m}^{''}\bigg|_{0}^{\pi} - \int\limits_{0}^{\pi}X_{n}^{'}X_{m}^{'''}dx = -(X_{n}X_{m}^{'''}\bigg|_{0}^{\pi} - \int\limits_{0}^{\pi}X_{n}X_{m}^{(4)}dx) = \int\limits_{0}^{\pi}X_{m}^{(4)}X_{n}dx \notag
+\end{multline}
+
+\begin{multline}
+ \int\limits_{0}^{\pi}X_{n}^{''}X_{m}dx = X_{n}^{'}X_{m}\bigg|_{0}^{\pi} - \int\limits_{0}^{\pi}X_{n}^{'}X_{m}^{'}dx = -(X_{n}X_{m}^{'}\bigg|_{0}^{\pi} - \int\limits_{0}^{\pi}X_{n}X_{m}^{''}) = \int\limits_{0}^{\pi}X_{m}^{''}X_{n}dx \\ \notag
+\end{multline}
+Подставив полученные выражения в $(\ref{8})$ , получим:
+\begin{equation} \lambda_{n} \int\limits_{0}^{\pi}X_{n}X_{m}dx = \lambda_{m} \int\limits_{0}^{\pi}X_{n}X_{m}dx \notag \end{equation}
+\begin{equation} (\lambda_{n}- \lambda_{m} ) \int\limits_{0}^{\pi}X_{n}X_{m}dx = 0 \notag \end{equation}
+Так как $\lambda_{n} \ne \lambda_{m}$, собственные функции ортогональны.
+
+Нормировав собственные функции, получим следующий их вид
+\begin{equation}
+  X_n = C_n ((\ch(z_n \pi) - \cos{y_n \pi})(\sh{z_n x} \frac{z_n}{y_n} \sin{y_n x}) + (\cos{y_n x} - \ch{z_n x})(\sh{z_n \pi} - \frac{z_n}{y_n}\sin{y_n \pi})),
+\end{equation}
+где $C_n = 1/(\sh{z_n \pi}(\pi + O(\frac 1 n))) \sqrt{\frac 2 \pi}$
+
+Также, функции обладают свойством равномерной ограниченности в $L_{2}[0;\pi]$:
+\begin{equation}
+  |X_n|^(k) < A_k \cdot n^k, \;\; A_k = const,
+\end{equation}
+это следует из прямых вычислений.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Базисные функции дифференциального оператора $A$ и их свойства]{Базисные функции дифференциального оператора $A$ и их свойства}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Период в условие  (\ref{period}) представлен в виде:
+\begin{equation}\label{tabc}
+T = 2\pi\frac{b}{c},\; b,c \in N, \; (b,c) = 1.
+\end{equation}
+Решение исходной задачи (\ref{equationkv}) - (\ref{periodkv}) будет представлено в виде ряда Фурье по следующей системе функций, обладающей свойствами полноты и ортонормированности в $L_2(\Omega)$
+
+\[
+   \left\{\begin{array}{lr}\label{fwef}
+         \frac{1}{T} X_n,  \sqrt{\frac{2}{T}}X_n \cos(\frac{2\pi}{T}m t),\sqrt{\frac{2}{T}}X_n \sin(\frac{2\pi}{T}m t)
+        \end{array}\right\}.
+  \]
+  Положим, что коэффициент  $a$ исходного уравнения
+\begin{equation}\label{a}
+  a > 0, \; (a + 1/8)b \notin \textbf{N},
+\end{equation}
+oбозначим
+\begin{gather}
+  e_{nm}^c = \sqrt{\frac{2}{T}}X_n \cos\bigg(\frac{2\pi}{T}m t\bigg)  \label{enm1}, \\
+  e_{nm}^s = \sqrt{\frac{2}{T}}X_n \sin\bigg(\frac{2\pi}{T}m t\bigg)\label{enm2}.
+\end{gather}
+
+Введем обозначение: $\Omega = [0;\pi] \times \textbf{R}/ (T \textbf{Z})$. Обозначим $D$ множество конечных линейных комбинаций функций из базиса. Рассмотрим оператор $A_0 : L_2(\Omega) \rightarrow L_2(\Omega)$, с областью определения $D(A_0) = D$,  и такой, что
+\begin{equation*}
+  A_0 u = u_{tt} + u_{xxxx} - a u_{xx}, \; u \in D.
+\end{equation*}
+Далее обозначим  $A = A^*_0$ в $L_2(\Omega)$, они совпадают на $D(A_0)$. Оператор $A$ является самосопряженным в $L_2(\Omega)$, покажем, что (\ref{enm1}), (\ref{enm2}) являются собственными функциями оператора $A$ с собственными значениями
+ \begin{equation}\label{munm}
+   \mu_{nm} = \lambda_n - \bigg(\frac{c}{b}m\bigg)^2,\; n \in N, \; m \in Z_+,
+ \end{equation}
+ то есть убедимся в выполнении равенства
+ \begin{equation*}\label{Lenm}
+ A e_{nm}^{c,s} = \mu_{nm} e_{nm}^{c,s}.
+ \end{equation*}
+ Оператор $A$ задачи (\ref{equation}) --- (\ref{period}) можно записать в виде:
+\begin{equation}\label{L}
+ A = \frac{\partial^2}{\partial t^2} + \frac{\partial^4}{\partial x^4} - a \frac{\partial^2}{\partial x^2}.
+ \end{equation}
+ Вычислим для $e_{nm}^c$:
+   \begin{multline*}
+  A e_{nm}^c = \frac{4 \pi^2}{T^2}m^2 \sqrt{\frac{2}{T}}\cos\bigg(\frac{2 \pi }{T} m t\bigg) + (X_n^{(4)} - a X''_n) e_{nm}^c  = \\
+  = \bigg((X_n^{(4)} - a X''_n)/X_n - \frac{4 \pi^2 m^2}{T^2}\bigg)e_{nm}^c  = \bigg(\lambda_n - \bigg(\frac{2 \pi m}{T}\bigg)^2\bigg) = \bigg(\lambda_n - \bigg(\frac{c}{b}m\bigg)^2\bigg)e_{nm}^c = \mu_{nm}e_{nm}^c.
+\end{multline*}
+Аналогичное доказательство можно провести и для $e_{nm}^s$. Введем обозначение
+\begin{equation}\label{Mnm}
+ \mu_{nm}  = \frac{c^2}{b^2}M(n,m)\bigg(\frac{b}{c}\sqrt{\lambda_n} + m\bigg),
+\end{equation}
+где $M(n,m) = \bigg(\frac{b}{c} \sqrt{\lambda_n} - m\bigg)$
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Лемма 1]{Лемма 1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Сформулируем лемму, которая потребуется нам для доказательства следующей теоремы.
+
+1. Для любого $n_1 \in \textbf{N}$ существует $\alpha_0 > 0$, такая что, если выполнены условия (\ref{a}), то выполнено неравенство
+\begin{equation}
+  |M(n,m)| \geqslant \alpha_0, \forall n > n_1,\; m \in \textbf{$Z_+$}.
+\end{equation}
+
+2. Существует такая $c_0$, что если $\mu_{nm} \ne 0$
+\begin{equation}\label{munmm}
+  |\mu_{nm}| \geqslant c_0 (b n^2 + c m).
+\end{equation}
+
+Докажем первое утверждение:
+Для начала рассмотрим выражение для $\sqrt{\lambda_n}$, его можно записать в виде:
+\begin{multline*}
+  \sqrt{\lambda_n} = \sqrt{\bigg(n + \frac{1}{4} - \rho_n\bigg)^4 + a\bigg(n + \frac{1}{4} - \rho_n\bigg)^2} = \\
+  = \bigg(n + \frac{1}{4} - \rho_n \bigg)^2 \sqrt{1 + \frac{a}{(n + 1/4 - \rho_n)^2}}.
+\end{multline*}
+Для произвольного $\delta \in (0; 1/2)$ обозначим $n_0(\delta) = [\delta \sqrt{a/(1 - 2 \delta)}] + 1$, тогда для любого натурального $n \geqslant n_0(\delta)$ имеет место соотношение
+\begin{equation}\label{lrn}
+  \sqrt{\lambda_n} = \bigg(n + \frac{1}{4} - \rho_n\bigg)^2 + r(n)a, r(n) \in (\delta,1/2).
+\end{equation}
+Выберем и зафиксируем  $\delta \in (0,1/2)$, при $n \geqslant n_0(\delta)$, тогда из равенства (\ref{lrn}) выведем соотношение
+\begin{equation*}
+  |M(n,m)| = \frac{1}{2c}\bigg|(n + 2n^2)b - 2c m + \beta(n) + V_n \bigg|,
+\end{equation*}
+где $\beta(n) = b(2 \rho_n^2 - (4n+1)\rho_n),\; V_n = b(2 v(n)a + \frac{1}{8}), \; v(n) \in  (\delta, 1/2)$.
+Из условия на $a$ и $b$ (\ref{a}) следует, что:
+\begin{equation*}
+  b\bigg(a + \frac{1}{8}\bigg) \in (k-1,k), \; k \in N.
+\end{equation*}
+Положим $k = 1$, тогда имеем $a < \frac{1}{b} - \frac{1}{8}, b < 8$, из выражения для $V_n$ следует, что
+\begin{equation}\label{k1}
+  \frac{b}{8}  < V_n < \bigg(a + \frac{1}{8}\bigg)b < 1.
+\end{equation}
+Положим $k \geqslant 2$, тогда при $l \geqslant \frac{b}{8} + 1$ зафиксируем
+\begin{equation*}
+  \delta = \bigg(\frac{\frac{k-1}{b} - \frac{1}{8}}{a} + 1\bigg)/4,
+\end{equation*}
+значит для любого $n \geqslant n_0(\delta)$ имеем
+\begin{equation}\label{k2}
+  k-1 < \bigg(\frac{1}{2} \bigg( \frac{l-1}{b} + a\bigg) + \frac{1}{16} \bigg) \cdot b < V_n < \bigg( a + \frac{1}{8}\bigg) b < k.
+\end{equation}
+Если же $b > 8$ и $2 \leqslant l \leqslant \frac{b}{8} + 1$, тогда для $n \geqslant n_0(\delta)$ зафиксируем $\delta = \frac{1}{4}$, получим следующее выражение:
+\begin{equation}\label{k3}
+    k-1 < \bigg(\frac{1}{2} a + \frac{1}{8}\bigg) b  < V_n < \bigg( a + \frac{1}{8}\bigg) b < k.
+\end{equation}
+Из неравенств (\ref{k1}), (\ref{k2}), (\ref{k3}) можно заключить, что существует такая $\alpha_1 \in (0,1)$, что
+\begin{equation*}
+  |R_n + l| \geqslant \alpha_1, l \in Z.
+\end{equation*}
+Из оценки для $\rho_n$ (\ref{thet}) следует, что если выбрать $n_1 \geqslant n_0(\delta)$, то для любого $n \geqslant n_1$ имеет место оценка $|\beta_n| < \frac{\alpha_1}{2}$. Обозначив $l = (n + 2n^2)b - 2c m$ при $n \geqslant n_1,\; m \in Z$ имеем следующее неравенство
+\begin{equation*}
+  |M(n,m)| \geqslant \frac{1}{2c} (|l+R_n + \beta_n|) \geqslant \frac{1}{2c} (|l+R_n| - |\beta_n|) \geqslant \frac{1}{2c} (\alpha_1 - \frac{\alpha_1}{2}) = \frac{1}{4c} \alpha_1 = \alpha_0.
+\end{equation*}
+Первое неравенство доказано
+
+Докажем второе неравенство, $\mu_{nm}$ имеет вид
+\begin{equation*}
+  \mu_{nm}  = \frac{c^2}{b^2}M(n,m)\bigg(\frac{b}{c}\sqrt{\lambda_n} + m\bigg).
+\end{equation*}
+Мы только что доказали, что существует $\alpha_0 > 0$, такая что $|M(n,m)| > \alpha_0$, тогда
+\begin{equation*}
+\frac{c^2}{b^2}M(n,m)\bigg(\frac{b}{c}\sqrt{\lambda_n} + m\bigg) > \alpha_0\bigg(\frac{c}{b}\sqrt{\lambda_n} + \frac{c^2}{b^2} m\bigg).
+\end{equation*}
+Из выражения (\ref{lrn}) для $\sqrt{\lambda_n}$  следует, что
+\begin{equation}\label{munmocenka}
+\alpha_0\bigg(\frac{c}{b}\sqrt{\lambda_n} + \frac{c^2}{b^2} m\bigg)  > c_0 (b n^2 + c m).
+\end{equation}
+Второе неравенство леммы доказано.
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[][Теорема о существовании решения задачи (\ref{equationkv}) - (\ref{periodkv}) в нерезонансном случае]{Теорема о существовании решения задачи (\ref{equationkv}) - (\ref{periodkv}) в нерезонансном случае}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Введем понятие обобщенного решения. Обобщенным решением задачи (\ref{equation}) - (\ref{period}) называют такую функцию $u \in L_2(\Omega)$, что для любой функции $\varphi \in D(A): |\varphi | < \infty$
+
+\textbf{Теорема.} \textit{(О существовании и единственности решения задачи (\ref{equationkv}) - (\ref{periodkv}) в нерезонансном случае.)} \\
+Будем полагать, что нелинейное слагаемое $g(x,t,u)$ удовлетворяет условиям:
+\begin{enumerate}\label{enen}
+  \item $g \in C^1(\Omega \times R), \; T $ периодична по $t$
+  \item Существуют константы $\alpha, \beta, \widetilde{u}$, что
+  \begin{equation}
+    \beta \geqslant \frac{g(x,t,u)}{u} \geqslant \alpha \;\;\; \forall (x,t) \in \Omega, \;\; u \in (-\infty; -\widetilde{u}] \cup [\widetilde{u}; +\infty).
+  \end{equation}
+\end{enumerate}
+Пусть выполнены условия (\ref{tabc}), (\ref{a}), (\ref{enen}) с условием на константы $\alpha, \beta, \widetilde{u}$:
+\begin{equation}\label{con}
+  \alpha < \beta, \widetilde{u} > 0, [\alpha,\beta] \cap \sigma = \emptyset,
+\end{equation}
+где $\sigma = sp(A)$. Тогда  задача (\ref{equationkv}) - (\ref{periodkv}) имеет обобщенное решение $u \in H_2(\Omega)\cup C^1(\Omega), \; u_{xx} \in C(\Omega)$ для любой $T$ --  периодической по $t$ правой части $f \in H_1(\Omega)$
+
+\textbf{Доказательство.}Введем обозначения: $H = L_2(\Omega), \; p(x,t,u) = g(x,t,u) - \alpha u.$ Из леммы 2 следует вполне непрерывность оператора $A:Im A \rightarrow Im A$. Так как $\alpha \not\in \sigma$, то $(A - \alpha I)^{-1} : H \rightarrow H$ тоже  является вполне  непрерывным. Действительно,
+\begin{equation}
+\sum\limits^{\infty}_{n = 1}\sum\limits^{\infty}_{m = 0}\frac{1}{(\mu_{nm} - \alpha)^2} = \frac{d}{\alpha^2} + \sum\limits_{\mu_{nm} \ne 0}\frac{1}{\mu_{nm}^2(1 - \alpha / \mu_{nm})^2},
+\end{equation}
+где $d$ -- размерность ядра оператора $A$ Так как $\alpha \not\in \sigma$, то из  (\ref{munmm}) следует, что существует такое $\varepsilon > 0,$ что $(1 - \frac{\alpha}{\mu_{nm}})^2 > \varepsilon > 0$ для всех $n \in \textbf{N}, m \in \textbf{Z}_+$ таких, что $\mu_{nm} \neq 0$. Отсюда получим:
+\begin{equation}
+\sum\limits^{\infty}_{n = 1}\sum\limits^{\infty}_{m = 0}\frac{1}{(\mu_{nm} - \alpha)^2} \leqslant \frac{d}{\alpha^2} + \frac{1}{\varepsilon}\sum\limits_{\mu_{nm} \ne 0}\frac{1}{\mu_{nm}^2}.
+\end{equation}
+Сходимость этого ряда была доказана нами ранее.
+
+Будем искать обобщенное решение задачи (\ref{equationkv}) - (\ref{periodkv}) как решение операторного уравнения
+\begin{equation}\label{eer}
+  A u  - g(x,t,u) = f
+\end{equation}
+Введем обозначение
+\begin{equation}
+T(u) = (A - \alpha I)^{-1}(p(x,t,u) + f),
+\end{equation}
+тогда  уравнение (\ref{eer}) можно переписать в виде
+\begin{equation}\label{38}
+  u = T(u)
+\end{equation}
+Оператор $T: H \rightarrow H$ является вполне непрерывным. Рассмотрим уравнение:
+\begin{equation}\label{39}
+  u = \xi T(u), \;\; \xi \in (0,1].
+\end{equation}
+Оценим $L_2$-норму решений уравненя (\ref{39}), для этого введем обозначение $\omega = (A - \alpha I)^{-1}f$ и приведем уравнение к виду
+\begin{equation}\label{40}
+  p(x,t,u) = -\frac{1}{\xi}(\alpha I  -A)(u -\xi \omega).
+\end{equation}
+Пусть $\lambda_1, \lambda_2$ -- соседние значения из спектра оператора $A$, т.е. $(\lambda_1,\lambda_2) \cap \sigma = \emptyset,$ также потребуем, чтобы $[\alpha, \beta] \subset (\lambda_1,\lambda_2)$. Умножим равенствно (\ref{40}) скалярно на $u - \xi \omega$ в $H$, воспользуемся тем, что $\alpha - \lambda_2$ является наименьшим по модулю собственным значением  оператора $\alpha I - A$, тогда получим:
+\begin{multline}
+  (p(x,t,u),u - \xi\omega) = -\frac{1}{\mu}((\alpha I - A)(u - \xi \omega),u - \xi \omega)\leq \\
+  \leq \frac{1}{\xi(\lambda_2 - \alpha)} \|(\alpha I - A)(u - \xi \omega)\|^2 = \frac{\xi}{\lambda_2 - \alpha} \|p(x,t,u) \|
+\end{multline}
+Выведем существования таких констант $C_1, C_2$, что
+\begin{equation}
+  u \cdot p(x,t,u) \geqslant -C_1, \;\; |p(x,t,u) | < (\beta - \alpha)|u| + C_2 \;\; \forall (x,t,u) \in \Omega \times R
+\end{equation}
+Докажем первое неравенство. $u \cdot p(x,t,u) \geqslant 0 \;\; \forall |u| > u_0$, введем функцию $F(x,t,u) = u \cdot p(x,t,u)$, она непрерывна на компакте $\Pi = [0,\pi] \times [-\widetilde{u},\widetilde{u}]$, значит на этом компакте она достигает своего минимума $\min\limits_{\Pi}F = -C_1,\; C_1 > 0$,  в итоге имеем
+\begin{equation}
+  u \cdot p(x,t,u) \geqslant -C_1 \;\; \;\; \forall (x,t,u) \in \Omega \times \textbf{R}
+\end{equation}
+Докажем второе неравенство. Из (\ref{enen}) следует, что вне компакта $\Pi$ выполняется неравенство
+\begin{equation}
+0 \leqslant  p(x,t,u) \leqslant (\beta -  \alpha)u
+\end{equation}
+Можно взять модули от левой и правой части, так как они обе положительные.
+\begin{equation}
+  |p(x,t,u)| \leqslant (\beta -  \alpha)|u|
+\end{equation}
+На компакте $\Pi$ функция $F(x,t,u) = |p(x,t,u)|  - (\beta -  \alpha)|u|$ является непрерывной, значит достигает своего максимума
+\begin{equation}
+  \max\limits_{\Pi}F(x,t,u) = C_2, \;\; C_2 > 0
+\end{equation}
+В итоге получаем:
+\begin{equation}
+  |p(x,t,u)| < (\beta - \alpha)|u|  + C_2 \;\; \forall (x,t,u) \in \Omega \times R
+\end{equation}
+Из полученных неравенств и (\ref{40}) следует:
+\begin{multline}
+  \frac{\xi}{\lambda_2 - \alpha} \|p(x,t,u) \|^2 \geqslant \int\limits_{\Omega}|p(x,t,u)\cdot u  + C_1|dx dt - C_1 \|\Omega\| - \|\omega\| \cdot\|p(x,t,u) \| \geqslant \\
+  \geqslant \int\limits_{\Omega}|p(x,t,u)\cdot u| - C_1dx dt - C_1 \|\Omega\| - \|\omega\| \cdot\|p(x,t,u) \| \geqslant \\
+  \geqslant \int\limits_{\Omega}|p(x,t,u)| \cdot |u| dx dt - 4\pi^2 C_1 - \|\omega\| \cdot\|p(x,t,u) \geqslant \\
+  \geqslant \frac{1}{\beta - \alpha} \|p(x,t,u) \|^2 - C_3 \|p(x,t,u)\| - 4\pi^2 C_1
+\end{multline}
+где $C_3 = \|\omega\| + \pi \sqrt{2}\frac{C_2}{\beta - \alpha}$
+Оценив $\lambda_2 - \alpha > \beta - \alpha$ из полученного неравенства  и (\ref{40}) получим следующие оценки
+\begin{equation}
+  \|p(x,t,u)\| \leqslant C_4, \|(A - \alpha I)(u - \xi \omega)\| < C_4.
+\end{equation}
+Константа $C_4$ не зависит от $\xi$. Так как $\alpha \not\in \sigma$, из последнего  неравенства получим $\|u\| \leqslant C_5,$ $C_5$ также не зависити от $\xi$, значит выполнены условия теоремы Лере-Шаудера о  неподвижной точке, следовательно существует решение $u \in H$ уравнения (\ref{38}). Гладкость и конечномерность обобщенного решения вытекает из конечномерности ядра оператора $ker A$ и леммы 2.
+
+\textbf{Замечание (о единственности решения)}. Если дополнительно условиям теоремы функция $g(x,t,u)$ удовлетворяет условию
+\begin{equation}\label{42}
+  \alpha \leqslant g'_u(x,t,u) \leqslant \beta \;\; \forall (u,x,t) \in R \times \Omega,
+\end{equation}
+тогда  задача (\ref{equationkv}) -- (\ref{periodkv}) имеет единственное решение.
+
+Доказательство. Предположим, что имеется два решения уравнения (\ref{eer}) $u_1, u_2$, тогда
+\begin{gather}
+  p(x,t,u_1) - (A - \alpha)u_1 = - f   \label{11}\\
+  p(x,t,u_2) - (A - \alpha)u_2 = - f  \label{22}
+\end{gather}
+Из (\ref{42}) несложно вывести, что
+\begin{equation}\label{45}
+  0 \leqslant (p(x,t,u) - p(x,t,v))(u - v) \leqslant (\beta - \alpha)(u - v)^2 \;\; \forall (x,t) \in \Omega; \; u,v \in R
+\end{equation}
+Вычев из (\ref{11}) соотношение (\ref{22}) и умножив скалярно в $L_2(\Omega)$ на $u_1  - u_2$  получим:
+\begin{equation}\label{46}
+(h(x,t,u_1) - h(x,t,u_2),(u_1 - u_2)) + ((A - \alpha)(u_1 - u_2),u_1 - u_2) = 0
+\end{equation}
+Из неравенства (\ref{45}) следует, что
+\begin{equation}\label{47}
+  (h(x,t,u_1) - h(x,t,u_2))(u_1 - u_2) \geqslant \frac{1}{\beta - \alpha}(h(x,t,u_1) - h(x,t,u_2))^2 \;\;\; \forall (x,t) \in \Omega
+\end{equation}
+Так как $(\alpha - \lambda_2)$ -- наибольшее отрицательное собственное значение оператора $\alpha - A$, то из (\ref{46}) и (\ref{47}) получим
+\begin{multline}
+  0 \geqslant \frac{1}{\beta - \alpha}\| h(x,t,u_1) - h(x,t,u_2) \|^2 - \frac{1}{\lambda_2 - \alpha} \| (\alpha - A)(u_1 - u_2) \|^2  = \\
+  = \bigg(\frac{1}{\beta - \alpha} -  \frac{1}{\lambda_2 - \alpha}\bigg)\| (\alpha - A  )(u_1 - u_2) \|^2
+\end{multline}
+Отсюда следует, что $(\alpha - A  )(u_1 - u_2) = 0$, это возможно только при $u_1 = u_2$. Единственность решения доказана.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[][Теорема о существовании решения задачи (\ref{equationkv}) - (\ref{periodkv}) в резонансном случае]{Теорема о существовании решения задачи (\ref{equationkv}) - (\ref{periodkv}) в резонансном случае}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Запишем уравнение (\ref{equationkv}) в следующем виде:
+\begin{equation}\label{54}
+u_{tt} + u_{xxxx} - a u_{xx} = g(u) + f(x,t), \;\; x \in (0,\pi),\; t \in \textbf{R}
+\end{equation}
+Пусть функция $g(u)$ имеет вид
+\begin{equation}\label{42}
+  g(u) = \lambda u  + p(u)
+\end{equation}
+Причем $\lambda \in \sigma$, а функция $p(u)$ ограниченная, то есть существует такая $L$, что
+\begin{equation}\label{43}
+  p(u) \leqslant L \;\; \forall u \in \textbf{R}
+\end{equation}
+Введем обозначения: $ N_2 = ker (A - \lambda I), \; N_1 = N_2^{\bot}, \; N_1, N_2 \in L_2(\Omega)$. Представим функцию $f \in L_2(\Omega)$ в виде суммы
+\begin{equation}\label{44}
+  f = f_1 + f_2, \; f_1 \in N_1, \; f_2 \in N_2.
+\end{equation}
+Стоит заметить, что выполнение условий (\ref{42}), (\ref{43}) не гарантирует выполнения утверждения теоремы 1 для задачи  (\ref{54}), (\ref{equationkv}) - (\ref{periodkv}). Эта задача будет иметь решение не при всех правых частях $f \in H_1(\Omega)$. Рассмотрим в качестве примера уравнение:
+\begin{equation}\label{12}
+  u_{tt} + u_{xxxx} - a u_{xx} - \lambda u - p(u) = k \cdot \eta.
+\end{equation}
+Здесь $\lambda \in \sigma, \; \eta$ -- нормированная в $L_2(\Omega)$ собственная функция оператора в $A$ с собственным значением $\lambda$ и параметр $k: |k| > M \sqrt{\pi T}$. Чтобы показать, что эта задача не имеет решения, умножим скалярно обе части уравнения $\ref{12}$ на $\eta$, тогда
+\begin{equation}
+  (A u, \eta) - \lambda (u, \eta) - (p(u),\eta) = k (\eta, \eta) = k
+\end{equation}
+Преобразуем левую часть, используя то, что оператор  $A$ -- самосопряженный.
+\begin{multline}
+  (A u, \eta) - \lambda (u, \eta) - (p(u),\eta) = \lambda(u, \eta) - \lambda (u, \eta) - (p(u),\eta)  =  - (p(u),\eta) = \\
+  = -\int\limits_{\Omega} p(u) \cdot \eta dx dt \leqslant \int\limits_{\Omega} |p(u)| \cdot |\eta| dx dt \leqslant \int\limits_{\Omega}L|\eta|  dx dt \leqslant L \sqrt{\pi T} \cdot \|\eta\| = L\sqrt{\pi T}
+\end{multline}
+Таким образом, получили, противоречие, значит решения не существует. Сформулируем теорему о существовании решения задачи (\ref{54}), (\ref{equationkv}) - (\ref{periodkv})
+
+\textbf{Теорема. 5} \textit{О существовании и единственности решения задачи (\ref{equationkv}) - (\ref{periodkv}) в резонансном случае.} \\
+Пусть выполнены условия (\ref{tabc}), (\ref{a}), (\ref{42}), (\ref{43}), $\lambda \in \sigma$, функция $p(u) \in C^{1}\textbf{R}$ не убывает или не возрастает по $u$. Также предположим, что функция $f(x,t) \in H_1(\Omega)$ имеет представление (\ref{44}) и слагаемое $f_2$ удовлетворяет либо неравенству:
+\begin{equation}\label{461}
+  p(-\infty) + \delta \leqslant -f_2(x,t) \leqslant p(+\infty) - \delta \;\; \forall (x,t) \in \Omega
+\end{equation}
+в том случае, если $p(x,t)$ не убывает,  либо неравенству
+\begin{equation}\label{462}
+  p(+\infty) + \delta \leqslant -f_2(x,t) \leqslant p(-\infty) - \delta \;\; \forall (x,t) \in \Omega
+\end{equation}
+в том случае, если $p(x,t)$ не возрастает с константой $ \delta > 0$, $(p(\pm\infty) = \lim\limits_{x \rightarrow \pm \infty}p(u))$.  Тогда задача (\ref{54}), (\ref{equationkv}) - (\ref{periodkv}) имеет обобщенное решение  $u \in H_2(\Omega) \cap C^{1}(\Omega)$ и $u_{xx} \in C(\Omega)$
+
+\textbf{Доказательство.} Для определенности положим, что $p(u)$ не убывает. Рассмотрим вспомогательное уравнение
+\begin{equation}\label{47}
+  -\varepsilon u + A u - g(u) = f
+\end{equation}
+Из (\ref{42}), (\ref{43}) следует существование такого $\widetilde{\varepsilon}$, что при всех  $\varepsilon \in (0, \widetilde{\varepsilon})$ выполнены условия теоремы 1 с нелинейным слагаемым $g_1(u) = p(u) + \lambda u + \varepsilon u$ и константами $\alpha = \lambda + \varepsilon/2,\; \beta = \lambda + 3 \varepsilon/2$, покажем это, для этого проверим выполнение условия $\ref{enen}$:
+\begin{gather}
+  \beta \geqslant \frac{p(u) + \lambda u + \varepsilon u}{u} \geqslant \alpha \\
+  \beta \geqslant \frac{p(u)}{u}  + \lambda \varepsilon \geqslant \alpha
+\end{gather}
+При стремлении $u$ к бесконечности в силу того, что функция $p(u)$ ограничена, получим:
+\begin{equation}
+  \beta \geqslant \lambda \varepsilon \geqslant \alpha
+\end{equation}
+Если взять $\alpha = \lambda + \varepsilon/2,\; \beta = \lambda + 3 \varepsilon/2$, то при достаточно малых $\varepsilon$ промежуток $(\alpha, \beta)$ не будет содержать значений из спектра, значит условие будет выполнено, следовательно для задачи (\ref{47}) существует решение $u_{\varepsilon}$. Совершим предельный переход при $\varepsilon \rightarrow 0$, для этого необходимо получить оценки норм $\|A u_{\varepsilon}\|, \|u_{\varepsilon}\|_{L_1}, \|u_{\varepsilon}\|_{L_{\infty}}$, которые не зависят от $\varepsilon$
+
+Представим $f_1$ в виде  суммы ряда Фурье
+\begin{equation}
+  f_1 = \sum\limits_{\mu_{nm} \ne \lambda} (a_{nm}e_{nm}^c + b_{nm} e_{nm}^s)
+\end{equation}
+для сокращения положим $e_{n 0}^s, b_{n 0} = 0$. Введем обозначение
+\begin{equation}
+  \omega = (A - \lambda I)^{-1} f_1 = \sum\limits_{\mu_{nm}}\frac{1}{\mu_{nm} - \lambda} (a_{nm}e_{nm}^c + b_{nm}e_{nm}^s).
+\end{equation}
+Покажем, что $\omega \in C(\Omega)$, для этого покажем сходимость ряда
+\begin{multline}
+  \sum\limits_{\mu_{nm}}\frac{1}{\mu_{nm} - \lambda}X_n (a_{nm}e_{nm}^c + b_{nm}e_{nm}^s) \leqslant  \sum\limits_{\mu_{nm}}\frac{1}{|\mu_{nm} - \lambda|} (|a_{nm}e_{nm}^c| + |b_{nm}e_{nm}^s|) \leqslant \\
+  \leqslant \sum\limits_{\mu_{nm}}\frac{1}{|\mu_{nm} - \lambda|}A_0 \sqrt{\frac{2}{T}} (|a_{nm}| + |b_{nm}|) \leqslant A_0 \sqrt{\frac{2}{T}} \bigg(\sum\limits_{\mu_{nm}}\frac{1}{(\mu_{nm} - \lambda)^2}\bigg)^{\frac{1}{2}}\|f_1\|
+\end{multline}
+Из условия (\ref{461}) следует существование функции $v \in L_{\infty}(\Omega): \; p(v) = -f_2$. Таким образом $u_{\varepsilon}$ является решение уравнения
+\begin{equation}\label{49}
+\varepsilon u_{\varepsilon} = (A - \lambda I)(u_{\varepsilon} - \omega) - (p(u_{\varepsilon}) - p(v)).
+\end{equation}
+Возьмем $\lambda_1, \lambda_2 \in  \sigma$ такие, что $\lambda_1 < \lambda  < \lambda_2, \; (\lambda_1, \lambda_2) \cap \sigma = \lambda$. Умножим (\ref{49}) на $(u_{\varepsilon} - \omega)$, воспользуемся (\ref{43}), монотонностью $p$, а также тем, что $(\lambda_1 - \lambda)$ -- наибольшее отрицательное собственное значение оператора $(A - \lambda I)$, тогда получим
+\begin{multline}
+  (\varepsilon u_{\varepsilon},u_{\varepsilon} - \omega) = ((A - \lambda I)(u_{\varepsilon} - \omega),u_{\varepsilon} - \omega) - (p(u_{\varepsilon}) - p(v),u_{\varepsilon} - \omega) \leqslant \\
+  \leqslant \frac{1}{\lambda - \lambda_1} \| (A - \lambda I) (u_{\varepsilon} - \omega) \|^2 - (p(u_{\varepsilon}) - p(v),u_{\varepsilon} - v) - (p(u_{\varepsilon}) - p(v),v - \omega) \leqslant \\
+  \leqslant  \frac{1}{\lambda - \lambda_1} \| \varepsilon u_{\varepsilon} + p(u_{\varepsilon}) - p(v)|^2  + C_6 \leqslant   \frac{1}{\lambda - \lambda_1} \| \varepsilon^2 \|u_{\varepsilon}\|^2 + C_7 \varepsilon \|u_{\varepsilon}\| + C_7
+\end{multline}
+Тут и далее $C_6,C_7,C_8,\ldots$ есть положительные константы, не зависящее от $\varepsilon$. Из полученного выражения выведем оценки для $\varepsilon\|u_{\varepsilon}\|^2$ и $\|(A - \lambda I)u_{\varepsilon}\|$.
+\begin{multline}
+  \varepsilon \|u_{\varepsilon}\|^2 \leqslant  \varepsilon (u_{\varepsilon},\omega) + \frac{1}{\lambda - \lambda_1} \varepsilon^2 \|u_{\varepsilon}\|^2  + C_7 \varepsilon \|u_{\varepsilon}\| + C_7  \leqslant \\
+  \leqslant  \frac{1}{\lambda - \lambda_1} \varepsilon^2 \|u_{\varepsilon}\|^2  + C_8 \varepsilon \|u_{\varepsilon}\| + C_7.\\
+\end{multline}
+ Произведем замену  $t = \sqrt{\varepsilon \|u_{\varepsilon}\|}$, тогда:
+ \begin{equation}
+   t^2 \leqslant \frac{1}{\lambda - \lambda_1} \varepsilon t^2 + C_8 \sqrt{\varepsilon} t + C_7
+ \end{equation}
+ Параметр $\varepsilon$ считаем малым, поэтому $1/(\lambda - \lambda_1)\varepsilon < 1/2$, тогда
+  \begin{gather}
+   t^2 \leqslant \frac{1}{2} t^2 + C_8 \sqrt{\varepsilon} t + C_7 \\
+   t^2 \leqslant 2 C_8 t + C_7 \\
+   (t - C_8 \sqrt{\varepsilon})^2 \leqslant C_7 + C_8^2  \varepsilon \\
+   |t - C_8 \varepsilon| \leqslant \sqrt{C_7 + C_8^2 \varepsilon}
+ \end{gather}
+ В итоге получаем, что
+ \begin{equation}
+   t \leqslant C_9 = C_8 \sqrt{\varepsilon} + \sqrt{C_5 + C_6^2 \varepsilon}
+ \end{equation}
+ тогда
+\begin{equation}\label{u1}
+  \varepsilon \|u_{\varepsilon}\|^2 < C_9
+\end{equation}
+Теперь покажем, что $\|(A - \lambda I)u_{\varepsilon}\| \leqslant C_{10}$\\
+\begin{multline}\label{aia}
+ \| (A - \lambda I) u_{\varepsilon} \| = \| \varepsilon u_{\varepsilon} + (p(u_{\varepsilon}) - p(v))  + (A - \lambda I) \omega\|  \leqslant \\
+ \leqslant \varepsilon \|u_{\varepsilon}\|^2 + \|p(u_{\varepsilon}) - p(v)\| + \|f_1\| \leqslant \sqrt{\varepsilon} C_8 + \sqrt{2} L \|\Omega\| + \|f_1\|  \leqslant C_{10}
+\end{multline}
+
+Чтобы показать ограниченность $\|u_{\varepsilon}\|_{L_1}$ введем функцию $\tau \in L_{\infty}(\Omega)$, такую, что $\|\tau\|_{L_{\infty}(\Omega)}\leqslant \delta/2 $, тогда из (\ref{461})
+\begin{equation}
+  p(-\infty) + \frac{\delta}{2} \leqslant -f_2  + \tau \leqslant p(+\infty) - \frac{\delta}{2}, \;\; -f_2 + \tau = p(v_\tau),
+\end{equation}
+где $\|v_{\tau}\|_{L_\infty} \leqslant L_{\delta}, \;\; L_{\delta}$ не зависит от $\tau$. Соотношение (\ref{49}) примет вид:
+\begin{equation}
+-\varepsilon u_{\varepsilon} + (A - \lambda I)(u_{\varepsilon} - \omega) - p(u_{\varepsilon}) + p(v_{\tau}) = \tau
+\end{equation}
+Получим оценку для $\|u_{\varepsilon}\|_{L_1}$, для этого умножим это уравнение скалярно в $L_2(\Omega)$ на $u_{\varepsilon} - v_{\tau}$, воспользуемся  монотонностью функции $p$.
+\begin{equation}
+  (\tau,u_{\varepsilon} - v_{\tau}) = - (\varepsilon u_{\varepsilon}, u_{\varepsilon} - v_{\tau}) + ((A - \lambda I)(u_{\varepsilon} - \omega),u_{\varepsilon} - v_{\tau}) - (p(u_{\varepsilon}) - p(v_{\tau}),u_{\varepsilon} - v_{\tau})
+\end{equation}
+Оценим отдельно первое слагаемое в правой части:
+\begin{multline}
+  -(\varepsilon u_{\varepsilon},u_{\varepsilon} - v_{\tau}) \leqslant (\varepsilon u_{\varepsilon},v_{\tau}) = \int\limits_{\Omega} \varepsilon u_{\varepsilon} v_{\tau} \leqslant \\
+  \leqslant  \sqrt{\int\limits_{\Omega} \varepsilon u_{\varepsilon} } \cdot \sqrt{\int\limits_{\Omega} v_{\tau} } \leqslant  \varepsilon \|u_{\varepsilon}\| \cdot |\Omega| L_{\delta} \leqslant \sqrt{\varepsilon C_9 |\Omega|} \cdot L_{\delta}.
+\end{multline}
+Тогда
+\begin{multline}
+  (\tau,u_{\varepsilon} - v_{\tau}) \leqslant  \sqrt{\varepsilon C_9 |\Omega|} \cdot L_{\delta} - ((\lambda I - A)(u_{\varepsilon} - \omega),u_{\varepsilon} - \omega) + ((A - \lambda I)(u_{\varepsilon} - \omega),\omega - v_{\tau}) \leqslant\\
+  \leqslant  \sqrt{\varepsilon C_9 |\Omega|} \cdot L_{\delta} + \frac{1}{\lambda_2 - \lambda}\|(\lambda I - A)(u_{\varepsilon} - \omega)\|^2 + (C_9 + \|f_1\|)(\|\omega\| + L_{\delta}|\Omega|) \leqslant \\
+  \leqslant \sqrt{\varepsilon C_9 |\Omega|} \cdot L_{\delta} + \frac{1}{\lambda_2 - \lambda}(C_9 + \|f_1\|)^2 + (C_9 + \|f_1\|)(\|\omega\| + L_{\delta}|\Omega|)
+\end{multline}
+Отсюда следует, что $(\tau, u_{\varepsilon}) < C_{11}$ при любой функции $\tau \in L_{\infty}(\Omega)$, такой,  что $\|\tau\|_{L_{\infty}} \leqslant \delta/2$.Таким образом
+\begin{equation}
+  \|u_{\varepsilon}\|_{L_1} \leqslant C_{12}.
+\end{equation}
+Пусть $u_{\varepsilon} = u_{1\varepsilon} + u_{2\varepsilon}, $ где $u_{1\varepsilon} \in N_1, u_{2\varepsilon} \in N_2$. Выведем оценки $\|u_{1\varepsilon}\|_{L_{\infty}} \leqslant C_{13}, \; \|u_{2\varepsilon}\| \leqslant C_{14}$. Используем ограниченность нормы
+\begin{equation}
+  \|(A - \lambda I) u_{1\varepsilon}\|^2 = \sum\limits_{\mu_{nm} \ne \lambda}(\mu_{nm} - \lambda)^2 (a_{nm}^2 +b_{nm}^2) \leqslant C_9
+\end{equation}
+Тогда
+\begin{multline}
+  \|u_{1\varepsilon}\| = \bigg|  \sum\limits_{\mu_{nm} \ne \lambda}(a_{nm} e_{nm}^c +b_{nm} e_{nm}^s) \bigg| \leqslant \\
+  \leqslant C_0  \sum\limits_{\mu_{nm} \ne \lambda} (|a_{nm}| + |b_{nm}|) \leqslant C_0  \sum\limits_{\mu_{nm} \ne \lambda} \frac{1}{\mu_{nm} - \lambda}\cdot \mu_{nm} - \lambda \cdot(|a_{nm}| + |b_{nm}|) \leqslant \\
+  \leqslant C_0 \sqrt{\sum\limits_{\mu_{nm} \ne \lambda}\frac{1}{(\mu_{nm} - \lambda)^2}} \cdot \sqrt{\sum\limits_{\mu_{nm} \ne \lambda}(\mu_{nm} - \lambda)^2(a_{nm}^2 + b_{nm}^2)} \leqslant C_0 \widehat{C}C_9^2 = C_{13}
+\end{multline}
+Теперь докажем, что  $\|u_{2\varepsilon}\| \leqslant C_{14}$, эта оценка выводится из предыдущей
+\begin{multline}
+  \|u_{2\varepsilon}\| = \|u_{\varepsilon} - u_{1\varepsilon}\|  \leqslant \|u_{\varepsilon}\|_{L_1} + \|u_{1\varepsilon}\| \leqslant C_{12} + \int\limits_{\Omega} |u_{1\varepsilon}| dx dt \leqslant \\
+  \leqslant C_{12} + \int\limits_{\Omega} C_{13} dx dt = C_{12} + C_{13}\cdot |\Omega| = C_{14}
+\end{multline}
+Покажем теперь ограниченность $\|u_{\varepsilon}\|$, эта выводится из двух предыдущих оценок
+\begin{multline}
+  \|u_{\varepsilon}\|^2 = \|u_{1\varepsilon} + u_{2\varepsilon}\|^2 = \|u_{1\varepsilon}\|^2 + \| u_{2\varepsilon} \|^2 \leqslant  C_0 \cdot \|u_{1\varepsilon}\|^2_{L_{\infty}}  + B_0 \|u_{2\varepsilon}\|^2_{L_1} \leqslant \\
+  \leqslant C_0 \cdot C_{13}^2 + B_0 \cdot C_{14}^2 = C_{15}^2
+\end{multline}
+Получили оценку $\|u_{\varepsilon}\| \leqslant C_{15}$
+
+Совершим предельный переход в уравнении (\ref{47}) при $\varepsilon \rightarrow 0$. Из полученных оценок (\ref{u1}), (\ref{aia}), а так же только что полученной оценки для $\|u_{\varepsilon}\|$ следует, что существует последовательность положительных чисел $\{\varepsilon_n\}: \; \varepsilon_n \rightarrow 0$ при $n \rightarrow \infty$ и последовательности $\{u_{\varepsilon_n}\}_n: \; u_{\varepsilon_n} \rightarrow u, \;\; \{(A - \lambda I)u_{\varepsilon_n}\}_n: \;  (A - \lambda I)u_{\varepsilon_n} \rightarrow \zeta$ слабо в $L_2(\Omega)$. Пусть $u = u_1 + u_2, \; u_{\varepsilon} = u_{1 \varepsilon_n} + u_{2\varepsilon_2}$, где $u_{1 \varepsilon_n}, u_1 \in N_1, \; u_{2 \varepsilon_n}, u_2 \in N_2$. Оператор $(A - \lambda I)^{-1}: N_1 \rightarrow N_1$ является вполне непрерывным, из этого следует сильная в $L_2(\Omega)$ сходимость $u_{1 \varepsilon_n} \rightarrow (A - \lambda I)^{-1}\zeta$. Отсюда следует, что
+\begin{gather}
+(A - \lambda I)^{-1} \zeta = u_1 \in N_1 \\
+\zeta = (A - \lambda I)u_1 = (A - \lambda I)u \\
+((A - \lambda I)u_{\varepsilon_n}, u_{\varepsilon_n}) \rightarrow ((A - \lambda I)u, u)
+\end{gather}
+при $n \rightarrow \infty$. Из монотонности функции следует, что
+\begin{equation}
+    \int\limits_{\Omega}(p(u_{\varepsilon_n}) - p(\theta))(u_{\varepsilon_n} - \theta)dx dt \geqslant 0 \;\; \forall  \theta \in L_2(\Omega),
+\end{equation}
+из (\ref{47}) выведем
+\begin{equation}
+    \int\limits_{\Omega}(-\varepsilon_n u_{\varepsilon_n} + (A - \lambda I)u_{\varepsilon_n} - f - p(\theta))(u_{\varepsilon_n} - \theta)dx dt \geqslant 0
+\end{equation}
+Если перейти в этом неравенстве к пределу $n \rightarrow \infty$, то получим
+\begin{equation}
+    \int\limits_{\Omega}((A - \lambda I)u - f - p(\theta))(u - \theta)dx dt \geqslant 0
+\end{equation}
+Положим в этом неравенстве $\theta = u - \kappa t, \; \kappa \in D, t >0$
+\begin{equation}
+    \int\limits_{\Omega}((A - \lambda I)u - f - p(u - \kappa t))\kappa t dx dt \geqslant 0
+\end{equation}
+Сократим на $t$ и перейдем к переделу $t \rightarrow 0 + 0$, тогда получим
+\begin{equation}
+    \int\limits_{\Omega}((A - \lambda I)u - f - p(u))\kappa dx dt \geqslant 0 \; \; \forall \kappa \in D
+\end{equation}
+Отсюда следует, что $(A - \lambda I)u - f - p(u) = 0$. Включения $u \in H_2(\Omega) \cap C^1(\Omega), u_{xx} \in C(\Omega)$ следуют из леммы 2. Таким образом, теорема доказана
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[][Постановка задачи 2]{Постановка задачи 2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Рассматривается квазилинейное уравнение вынужденных колебаний двутавровой балки
+
+\begin{equation}\label{equationkv2}
+  u_{tt} + u_{xxxx} - au_{xx} = g(x, t) |u|^{p-2}u, \; x \in (0,\pi), \; t \in \textbf{R}
+\end{equation}
+с однородными граничными условиями на отрезке
+\begin{equation}\label{ickv12}
+  u(0,t) = u_{xx}(0,t) = 0, \; t \in \textbf{R}  \\
+  \end{equation}
+\begin{equation}\label{ickv22}
+  u_x(\pi,t) = u_{xxx}(\pi,t) - h u(\pi t) = 0, \; t \in \textbf{R}
+\end{equation}
+и с условием периодичности по времени
+\begin{equation}\label{periodkv2}
+ u(x,t + T) = u(x,t), \; 0 < x < \pi , \; t \in \textbf{R}.
+\end{equation}
+
+Цель второй части работы --- получить условия существования, несуществования и единственности периодического решения задачи (\ref{equationkv}) -- (\ref{periodkv}), в случаях когда нелинейное слагаемое удовлетворяет условию резонансности и нерезонанстности на бесконечности.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[][Линейное уравнение]{Линейное уравнение}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Рассмотрим линейное уравнение:
+
+\begin{equation}\label{equation2}
+  u_{tt} + u_{xxxx} - au_{xx} =  f(x,t), \; x \in (0,\pi), \; t \in \textbf{R}
+\end{equation}
+с однородными граничными условиями на отрезке
+\begin{gather}\label{ic2}
+   u(0,t) = u_{xx}(0,t) = 0, \; t \in \textbf{R}  \\
+  u_x(\pi,t) = u_{xxx}(\pi,t) - h u(\pi t) = 0,
+\end{gather}
+и с условием периодичности по времени
+\begin{equation}\label{period2}
+ u(x,t + T) = u(x,t), \; 0 < x < \pi , \; t \in \textbf{R}.
+\end{equation}
+Проведем исследование для линейного случая, чтобы в дальнейшем использовать его для квазилинейного случая, в частности построим ортонормированный базис.
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Задача Штурма-Лиувилля, соответствующая случаю закрепления концов]{Задача Штурма-Лиувилля, соответствующая случаю закрепления концов}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Уравнению (\ref{equation}) соответствует следующая задача Штурма-Лиувилля на поиск собственных значений.
+
+Поставим и исследуем задачу Штурма---Лиувилля на поиск собственных значений оператора уравнения (\ref{equation2}).
+
+\begin{equation}\label{task2}
+  Y'''' - a Y'' = \lambda Y, y \in (0,\pi),\; a > 0
+\end{equation}
+с граничными условиями
+\begin{gather}
+  Y(0) = Y''(0) =0  \label{bc12}, \\
+  Y'(\pi) = Y'''(\pi) - h Y(\pi) = 0 \label{bc22}.
+\end{gather}
+По тем же соображениям, что были приведены в первой части работы, $\lambda$ является положительным.
+
+Решим исходное уравнение (\ref{task2}) - (\ref{bc22})
+\begin{equation}
+  Y'''' - a Y'' = \lambda Y, \; y \in (0,\pi),\; a > 0.
+\end{equation}
+Составим и решим характеристическое уравнение
+\begin{gather*}
+k^4-ak^2-\lambda=0,  \\
+D = a^2+4 \lambda = 0,  \\
+k^2 = \frac 1 2 (a-\sqrt{a^2+4\lambda}) < 0,  \\
+k^2 = \frac 1 2 (a+\sqrt{a^2+4\lambda}) > 0.
+\end{gather*}
+Произведем замену, для упрощения вычислений
+
+\begin{gather}
+-b^2 = \frac 1 2 (a-\sqrt{a^2+4\lambda}), \label{b2}   \\
+c^2 = \frac 1 2 (a+\sqrt{a^2+4\lambda}),\label{c2}   \\
+k^2 = c^2, \; k^2 = -b^2,\notag \\
+k_1 = c, \; k_2 = -c, \; k_3 = ib, \; k_4 = -ib,  \notag \\
+b = \sqrt{\frac 1 2 (\sqrt{a^2+4\lambda}-a)}, \; c = \sqrt{\frac 1 2 (a+\sqrt{a^2+4\lambda})}.  \label{bc2}
+\end{gather}
+В качестве фундаментальной системы решений возьмем
+$$\{\ch(cx), \; \sh(cx), \; \cos(bx), \; \sin(bx)\}, $$
+общий вид частного решения можно представить как
+\begin{equation}\label{132}
+ Y = C_1\ch(cx)+C_2\sh(cx)+C_3\cos(bx)+C_4\sin(bx).
+ \end{equation}
+Из первых граничных условий (\ref{bc12}) следует, что
+\begin{equation*}
+ \begin{cases}
+   Y(0) = C_1 + C_3 = 0\\
+   Y''(0) = C_1 c^2 - C_3 y^2 = 0,
+ \end{cases}
+\end{equation*}
+следовательно $C_1 = C_3 = 0$, уравнение (\ref{132}) примет вид
+\begin{equation*}
+ Y(y) = C_2 \sh{cx} + C_4 \sin{bx}
+ \end{equation*}
+Из (\ref{bc22}) следует, что
+\begin{equation}\label{C_sys}
+ \begin{cases}
+   C_2 c \ch{c \pi} + C_4 b \cos{b \pi} = 0 \\
+   C_2 (c^3 \ch{c \pi} - h \sh{c \pi}) + C_4 (-b^3 \cos{b \pi} - h \sin{b \pi}) = 0,
+ \end{cases}
+\end{equation}
+Эта система имеет решения относительно $C_1, C_2$ тогда и только тогда, когда ее определитель равен нулю, это условие имеет вид:
+\begin{equation*}
+ - c \ch{c \pi} (b^3 \cos{b \pi} + h \sin{b \pi}) = y \cos{b \pi} (c^3 \ch{c \pi} - h \sh{c \pi})
+\end{equation*}
+После преобразований получим следующее выражение
+\begin{equation}\label{tre2}
+ \ctg{b \pi} = \frac {1} {\frac{b}{c}\th(c \pi) - \frac{1}{h}(2 b^3 + b a)}
+%  h(\frac{\th{c \pi}}{c} - \frac{\th{b \pi}}{b}) = y^2 + z^2 = \sqrt{a^2 + 4 \lambda}
+\end{equation}
+Если подставить в это равенство выражение $c$ через $b$, то получим
+\begin{equation}\label{transc}
+  \ctg{b \pi} = \frac {1} {\frac{b}{\sqrt{b^2+a}}\th(\pi \sqrt{b^2+a}) - \frac{1}{h}(2 b^3 + b a)}
+\end{equation}
+После подстановки в него выражений для $y(\lambda), z(\lambda)$ получим трансцендентное уравнение относительно $\lambda$.
+Собственные функции можно представить ввиде:
+\begin{equation}\label{Xn2}
+  Y(y) = C_2 \sh{c y} + C_4 \sin{b y}, \;\; C_1, C_2 \in \mathbb{R}
+\end{equation}
+Выражение для $\lambda$ примет вид
+\begin{equation}\label{lamn}
+  \lambda = b^4 + a b^2
+\end{equation}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Локализация собственных значений]{Локализация собственных значений}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Проведем исследование корней уравнения (\ref{transc}), для этого обозначим $g(b) = \frac{b}{c(b)}\th(\pi c(b)) - \frac{1}{h}(2 b^3 + b a)$. Найдем производную функции $g(b)$,  $$g'(b) = \frac{b}{c^3}\th(c \pi) + \frac{b^2 \pi}{c^2 \ch^2(c \pi)} - \frac 1 h (6 b^2 + a)$$
+Так как $\th(c \pi) > 0$ при $c > 0$, а так же $a > 0$, $b, h = const > 0$, то существует такое $b' \in N$, что для любого $b > b'$  $g(b) < 0$  и $g'(b) < 0$, следовательно функция $\frac {1} {g(b)}$, соответствующая правой части уравнения (\ref{transc}) являеетя отрицательной и возрастает при $b > b'$.
+Рассмотрим функцию $G(b) = \ctg{b \pi} - \frac{1}{g(\pi)}$. При $n > b' + \frac 1 2$ будем иметь следующие соотношения
+\begin{equation}
+  G(n - \frac 1 2) = \frac{-1}{g(n - \frac{1}{2})} > 0,
+\end{equation}
+\begin{multline}
+ \lim_{b \rightarrow n-0}G(b) =  \lim_{b \rightarrow n-0} \ctg(b \pi) - 1/\bigg(\frac{b}{c(b)}\th(\pi c(b)) - \frac{1}{h}(2 b^3 + b a)\bigg) = \\
+ =  \lim_{b \rightarrow n-0} \ctg(b \pi) = -\infty
+\end{multline}
+Отсюда следует, что для $n > b' + \frac 1 2$ на каждом интервале $(n - \frac 1 2, n)$ найдется корень уравнения (\ref{transc}). Левая часть уравнения убывает, а правая возрастает, этот корень единственнен на каждом интервале, отсюда следуюет, что корень $b_n$ уравнения (\ref{transc}) можно записать ввиде
+\begin{equation}\label{bn}
+  b_n = n - \frac 1 2 + \rho_n, \;\text{где величина} \;\rho_n \in (0, \frac 1 2).
+\end{equation}
+На промежутке $(n, n+\frac{1}{2})$ решений нет, так как
+\begin{equation}
+  G(n + \frac 1 2) = \frac{-1}{g(n + \frac{1}{2})} > 0,\;\; \lim_{b \rightarrow n+0}G(b) = +\infty
+\end{equation}
+Подставим выражение для $b_n$ (\ref{bn}) в уравнение (\ref{tre2}), тогда получим
+\begin{equation}
+  ctg(\pi(n - \frac 1 2 + \rho_n)) = \frac{1}{\frac{b_n}{c_n} \th{\pi c_n} - \frac{1}{h} (2 b_n^3  + b_n a)}
+\end{equation}
+После преобразование получим следующее выражение
+\begin{equation}
+  ctg(\pi \rho_n) = \frac{b_n}{c_n} \th{\pi c_n} - \frac{1}{h} (2 b_n^3  + b_n a)
+\end{equation}
+Исследуем поведение велоичины $\rho_n$ при $n \rightarrow +\infty$, для этого сначала оценим правую часть, величина $\frac{b_n}{c_n}$ стремиться к  при $n \rightarrow +\infty$, $\th{\pi c_n}$ ограниченная функция и стремиться к $1$ при $n \rightarrow +\infty$. Величина $(2 b_n^3  + b_n a)$ стремиться к бесконечности и имеет третий порядок, то есть $0(n^3)$, следователно
+\begin{equation}
+  \lim_{n \rightarrow +\infty}\frac{\cos{\pi \rho_n}}{\sin{\pi \rho_n}} = +\infty,
+\end{equation}
+следовательно
+\begin{equation}
+  \lim_{n \rightarrow +\infty}\sin{\pi \rho_n} = 0
+\end{equation}
+Это возможно только, если
+\begin{equation}\label{rhonlim}
+   \lim_{n \rightarrow +\infty}\rho_n \rightarrow 0.
+\end{equation}
+Причем $\rho_n = O(n^3)$, осталось получить строгую оценку скорости роста $\rho_n$
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Оценка $\rho_n$]{Оценка $\rho_n$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Перепишем уравнение (\ref{tre2}) в виде:
+\begin{equation}\label{ctgg}
+  \ctg{b_n \pi} = \frac{h}{h\frac{b_n}{c_n}\th(c_n \pi) - 2 b_n^3 + b_n a}
+\end{equation}
+После подстановки выражения (\ref{bn}) в левую часть, получим
+\begin{equation}
+  \ctg(b_n \pi) = \ctg{(n - \frac 1 2 + \rho_n) \pi} = -\tg(\rho_n)
+\end{equation}
+Домножим уравнение (\ref{ctgg}) на $\frac{\rho_n}{\tg(\pi \rho_n)}$, получим
+\begin{equation}
+  \rho_n = \frac{\pi \rho_n}{\pi\tg(\pi \rho_n)}\frac{h}{h\frac{b_n}{\sqrt{b_n^2 + a}}\th(\sqrt{b_n^2 + a} \pi) - 2 b_n^3 + b_n a}
+\end{equation}
+Рассмотрим функцию $u(l) = \frac{l}{\tg(l)}$, её производная $u'(l) = \frac{\sin(2 l) - 2 l}{2 \sin^2(l)}$ отрицательная на промежутке $l \in (0, \frac{\pi}{4})$, так как
+\begin{multline}
+  \lim_{l \rightarrow 0+0} u'(l) = \lim_{l \rightarrow 0+0} \frac{\sin{2 l} - 2 l}{2 \sin^2{l}}  = \lim_{l \rightarrow 0+0} \frac{2\sin{l} - 2 l}{2 \sin^2{l}} = \\
+  = \lim_{l \rightarrow 0+0} \frac{\cos{l} - 1}{2 \sin{l}} = \lim_{l \rightarrow 0+0} \frac{-\sin{l}}{2 \cos{l}}  = 0
+\end{multline}
+\begin{equation}
+  u'\bigg(\frac{\pi}{4}\bigg) = \frac{\sin(\frac{\pi}{2}) - \frac{\pi}{2}}{2 \sin^2(\frac{\pi}{2})} = 1 - \frac{\pi}{2} < 0
+\end{equation}
+Тогда для $u(\pi \rho_n)$ будет справедлива формула
+\begin{equation}\label{es1}
+  \frac{\pi}{4} < \frac{\pi \rho_n}{\tg(\pi \rho_n)} < 1
+\end{equation}
+Обозначим
+\begin{equation}
+  v(l) = \frac{l}{\sqrt{l^2 + a}} \th(\pi \sqrt(l^2 + a))
+\end{equation}
+Тогда для функции $1 - v(l)$ справедливо
+\begin{multline}
+  1 - v(l) = 1 - \frac{l}{\sqrt{l^2 + a}} \th\bigg(\pi \sqrt{l^2 + a}\bigg) = \\
+  = \frac{a}{\sqrt{l^2 + a}(\sqrt{l^2 + a} + l)} + \frac{l}{\sqrt{l^2 + a}}\bigg(1 - \th\bigg(\pi\sqrt{l^2 + a}\bigg)\bigg)
+\end{multline}
+Проивзедем оценку снизу
+\begin{multline}\label{es2}
+  1 - v(b_n) = \frac{a}{\sqrt{b_n^2 + a}(\sqrt{b_n^2 + a} + l)} + \frac{b_n}{\sqrt{b_n^2 + a}}\bigg(1 - \th\bigg(\pi\sqrt{b_n^2 + a}\bigg)\bigg)  > \\
+  >  \frac{a}{\sqrt{b_n^2 + a}(\sqrt{b_n^2 + a} + l)} = \frac{a}{b_n^2 + a + b_n\sqrt{b_n^2 + a}} > \frac{a}{2(b_n^2 + a)}
+\end{multline}
+Теперь оценку сверху
+\begin{multline}\label{es3}
+  1 - v(b_n) = \frac{a}{\sqrt{b_n^2 + a}(\sqrt{b_n^2 + a} + l)} + \frac{b_n - b_n\th\bigg(\pi\sqrt{b_n^2 + a}\bigg)}{\sqrt{b_n^2 + a}} < \\
+  < \frac{a}{b_n^2+a+b_n\sqrt{b_n^2 + a}} + \frac{b_n - b_n\th\bigg(\pi b_n \bigg)}{\sqrt{b_n^2 + a}} < \frac{a}{2 b_n^2} + b_n - b_n \th(\pi b_n) = \\
+  = \frac{a}{2 b_n^2} + b_n - b_n \frac{\sh(\pi b_n)}{\ch(\pi b_n)} = \frac{a}{2 b_n^2} + b_n - b_n \frac{e^{2 \pi b_n} - 1}{e^{2 \pi b_n} + 1} = \\
+  = \frac{a}{2 b_n^2} + \frac{2 b_n}{e^{2 \pi b_n} + 1} < \frac{a + 2 b_n}{2 b_n^2}.
+\end{multline}
+Из этих оценок следует оценка для $v(b_n) = \frac{b_n}{\sqrt{b_n^2 + a}} \th(\pi \sqrt(b_n^2 + a)) $:
+\begin{equation}
+  1 - \frac{a + 2 b_n}{2 b_n^2} < \frac{b_n \th(\pi \sqrt{b_n^2 + a})}{\sqrt{b_n^2 + a}} < 1 - \frac{a}{2(b_n^2 + a)}
+\end{equation}
+Корни уравнения (\ref{tre2}) лежат на интервале $(n - 1/2, n)$, поэтому для $b_n$ справедливо:
+\begin{equation}\label{es4}
+  \bigg(n - \frac 1 2\bigg)^k < b_n^k < n^k, \;\; k = 2, 3
+\end{equation}
+Тогда из оценок (\ref{es1}) - (\ref{es4}) получим оценку $\rho_n$:
+\begin{equation}
+  \frac{h/4}{2n^3 + a n - h\bigg(1 - \frac{a + 2n}{2(n-\frac 1 2)^2}\bigg)} < \rho_n < \frac{h / \pi}{2\bigg(n - \frac 1 2\bigg)^3 + a\bigg(n - \frac 1 2\bigg) - h\bigg(1 - \frac{a}{2(n^2 + a)}\bigg)}
+\end{equation}
+Следовательно существуют $C_1, C_2 \in R$ и число $b' \in N$ такие, что для любого $n > b' + \frac 1 2$
+\begin{equation}\label{rhon}
+  \frac{C_1}{n^3} < \rho_n < \frac{C_2}{n^3}
+\end{equation}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Нормировка собственных функций оператора]{Нормировка собственных функций оператора}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Из первого уравнения системы (\ref{C_sys}) выразим $C_2$
+\begin{equation}
+  C_2 = -C_4\frac{b \cos(b\pi)}{c \ch(c\pi)}
+\end{equation}
+Тогда собственные функции представимы в виде:
+\begin{equation}
+  Y_n(y) = C_4(\sin(b_n y) -\sh(c_n y)\frac{b \cos(b\pi)}{c \ch(c\pi)})
+\end{equation}
+Произведем нормировку собственных функций
+\begin{multline}
+  \|Y_n\|^2_{L_2[0,\pi]} =  C_4^2\bigg(\int\limits_0^{\pi} \sin^2(b_n y)dy - 2 \frac{b_n \cos(b_n\pi)}{c_n \ch(c_n\pi)} \int\limits_0^{\pi} \sin(b_n y)\sh(c_n y)dy + \\
+  + \frac{b_n^2 \cos^2(b_n\pi)}{c_n^2 \ch^2(c_n\pi)} \int\limits_0^{\pi} \sh^2(c_n y)dy \bigg) =  C_4^2\bigg(\frac{\pi}{2} - \frac{\sin(2 \pi b_n)}{4 b_n} - \\
+  - 2 \frac{b_n \cos(b_n\pi)}{c_n \ch(c_n\pi)} \frac{1}{b_n^2 + c_n^2}(c_n \sin(b_n \pi)\ch(c_n \pi) - b_n \cos(b_n \pi)\sh(c_n \pi)) + \frac{b_n^2 \cos^2(b_n\pi)}{c_n^2 \ch^2(c_n\pi)}(\frac{\sh(2 \pi c_n)}{4 c_n} - \frac{\pi}{2})\bigg)
+\end{multline}
+Из выражений (\ref{bc2})для $b_n, c_n$ следует следуещее выражение для $\|Y_n\|^2$:
+\begin{equation}
+  \|Y_n\|^2_{L_2[0,\pi]} = C_4^2\bigg(\frac{\pi}{2} + O\bigg(\frac 1 n\bigg)\bigg), \;\; \text{при} n \rightarrow + \infty
+\end{equation}
+Значит имеет место следующее представление $C_4 = \frac{1}{\sqrt{\frac{\pi}{2} + O(\frac 1 n)}}$, тогда выражение для собственных функций примет вид:
+\begin{equation}
+  Y_n(y) = C_n(\sin(b_n y) -\sh(c_n y)\frac{b \cos(b\pi)}{c \ch(c\pi)}), \; \text{где} \; C_n = \frac{1}{\sqrt{\frac{\pi}{2} + O(\frac 1 n)}} \; \text{при} \; n \rightarrow +\infty
+\end{equation}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Собственные значения $\lambda_n$]{Собственные значения $\lambda_n$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Из формул (\ref{lamn}) и (\ref{bc2}) вытекает следующее представление для собственных функций
+\begin{equation}\label{ourl}
+  \lambda_n = (n - \frac 1 2 + \rho_n)^4 + a(n - \frac 1 2 + \rho_n)^2
+\end{equation}
+В дальнейшем удобно использовать формулу для $\lambda_n$ (7.2) из работы [Назаров], которая является  общей  для собственных значений произвольного дифференциального оператора четного порядка с переменными коэффициентами. Для задачи (\ref{equationkv2}) - (\ref{periodkv2}) справедливо следующее выражение для собственных значений при всех натуральных $n$
+\begin{equation}\label{nazarov}
+  \lambda_n = \bigg(n - \frac 1 2 + O\bigg(\frac 1 n\bigg)\bigg)^4
+\end{equation}
+Покажем, что полученное нами выражение, является обобщением формулы (\ref{nazarov}), для этого рассмотрим предел
+\begin{equation}\label{nazarovD}
+  \lim\limits_{n \rightarrow \infty}\bigg(\sqrt[4]{\lambda_n} - \bigg(n + \frac 1 2\bigg)\bigg)n,
+\end{equation}
+где $\lambda_n$ вычислятся по формуле (\ref{ourl}). Пусть $\{\kappa_n\}_n$ - числовая последовательность такая, что существует $n_0$ такое, что для любого $n > n_0$ $0 < \kappa_n < \infty$, тогда выражение (\ref{nazarovD}) представимо в виде
+\begin{equation}
+  \lim\limits_{n \rightarrow \infty}\bigg(\sqrt[4]{\bigg(n - \frac 1 2 + \frac{\kappa_n}{n^3}\bigg)^4 + a\bigg(n - \frac 1 2 + \frac{\kappa_n}{n^3}\bigg)^2} - \bigg(n - \frac 1 2\bigg)\bigg)n.
+\end{equation}
+Произведем замену $m = n - \frac 1 2$, тогда выражение примет вид
+\begin{equation}
+  \lim\limits_{m \rightarrow \infty}\bigg(\sqrt[4]{\bigg(m + \frac{\kappa_{m + \frac 1 2}}{(m + \frac 1 2)^3}\bigg)^4 + a\bigg(m + \frac{\kappa_{m + \frac 1 2}}{(m + \frac 1 2)^3}\bigg)^2} - m\bigg)\bigg(m + \frac 1 2\bigg).
+\end{equation}
+Члены $\frac{\kappa_{m + \frac 1 2}}{(m + \frac 1 2)^3}$, стремятся к нулю при $m \rightarrow \infty$, исключая их, а так же полагая $m+1 \sim m$, получаем
+\begin{multline}
+  \lim\limits_{m \rightarrow \infty}(\sqrt[4]{m^4 + a m^2} - m)\bigg(m + \frac 1 2\bigg) = \lim\limits_{m \rightarrow \infty}\sqrt[4]{m^8 + a m^6} - m^2 = \\
+  = \lim\limits_{m \rightarrow \infty} \frac{\sqrt{m^8 + a m^6} - m^4}{\sqrt[4]{m^8 + a m^6} + m^2} = \lim\limits_{m \rightarrow \infty} \frac{a m^6}{(\sqrt[4]{m^8 + a m^6} + m^2)(\sqrt{m^8 + a m^6} + m^2)} = \\
+  = \lim\limits_{m \rightarrow \infty}\frac{a m^6}{4 m^6} = \frac{a}{4}
+\end{multline}
+Таким образом, мы получили первый член ассимптотики слагаемого $O(\frac 1 n)$ в формуле для $\lambda_n$ (\ref{nazarov}), следовательно наша формула (\ref{ourl}) является её обобщением, и с учетом представленных выше выкладок, выражение (\ref{nazarov}) примет вид:
+\begin{equation}\label{lambda3}
+  \lambda_n = \bigg(n - \frac 1 2 + \frac{a}{4n} + O\bigg(\frac{1}{n^2}\bigg)\bigg)
+\end{equation}
+Если значение $b' + \frac 1 2 \in N$, тогда обозначим $n' = b' + \frac 1 2$, если же $b' + \frac 1 2 \notin N$, то $n' = [b' + \frac 1 2 ] + 1$. Тогда на интервале $(0, n' - \frac 1 2)$ задача (\ref{equationkv2}) - (\ref{periodkv2}) имеет конечное число собственных значений [НЕЙМАРК]. Рассмотрим интервал $(0, n_0 - \frac 1 2)$, пусть на нём имеется $k, k \in N \cup \{0\}$ собственных значений задачи (\ref{equationkv2}) - (\ref{periodkv2}) (с учетом кратностей). Введем обозначение $\{\varphi_n\}, \{Y_n\}, n \in N$ соответственно последовательность собственных значений (расположенных в порядке возрастания) и  соответствующие им собственные функции. Из (\ref{lambda3}) вытекает, что  для n > k + 1 справедливо следующее представление
+\begin{equation}\label{fi}
+  \varphi_n = \bigg(n + n' - k + \frac{3}{2} + \frac{a}{4n} + O\bigg(\frac{1}{n^2}\bigg)\bigg).
+\end{equation}
+При этом собственные функции примут следующий вид
+\begin{equation}
+  Y_n = C_n \bigg(\sin(\tilde{b}_n x) - \frac{\tilde{b}_n}{\tilde{c}_n}\cos(\tilde{b}_n x)\frac{\sh(\tilde{c}_n \pi)}{\ch(\tilde{c}_n \pi)}\bigg),
+\end{equation}
+где
+\begin{gather}
+  \tilde{b}_n = n + n' - k - \frac 3 2 + \rho_n \\
+  \tilde{c}_n = \sqrt{\tilde{b}^2_n + a} \\
+  \tilde{n} = n + n' - m - 1
+\end{gather}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Базисные функции дифференциального оператора $P$ и их свойства]{Базисные функции дифференциального оператора $P$ и их свойства}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Введем понятие обобщенного решения. Обобщенным решением задачи (\ref{equation}) - (\ref{period}) называют такую функцию $u \in L_2(\Omega)$, что для любой функции $\xi \in V: |\xi | < \infty$
+\begin{equation}
+  \int\limits_{\Omega} u ( \xi_{tt} + \xi_{xxxx} - a \xi_{xx}) \; dx dt  =  \int\limits_{\Omega} f(x,t) \xi \; dx dt,
+\end{equation}
+где множество $V = \{\xi \in C^{\infty}(\Omega) \; | \; \xi(0,t) = \xi_{xx}(0,t) = 0, \; \xi(\pi,t) = \xi_{xxx}(\pi,t) - h \xi(\pi,t) = 0 \; \forall t\}$
+
+Решение исходной задачи (\ref{equationkv2}) - (\ref{periodkv2}) можно представить в виде ряда Фурье по следующей системе функций.
+
+\[
+   \left\{\begin{array}{lr}\label{sysys}
+         \sqrt{\frac{p}{\pi q}}Y_n(x)\cos(\frac{p}{q}l t), \sqrt{\frac{p}{\pi q}}Y_n(x)\sin(\frac{p}{q}l t), \frac{p}{2 \pi q} Y_n(x)
+        \end{array}\right\}_{l,n \in N},
+  \]
+где $p, q$ определяются условием на период:
+\begin{equation}\label{Tcond2}
+  T = 2 \pi \frac q p, \; q, p \in N, \; \text{НОД}(q, p) = 1.
+\end{equation}
+Эта система является полной и ортонормированной в $L_2(\Omega)$. Введем следующие обозначения:
+\begin{gather}\label{eigenf}
+  g^{cos}_{nl} = \sqrt{\frac{p}{\pi q}}Y_n(x)\cos\bigg(\frac{p}{q}l t\bigg) \\
+  g^{sin}_{nl} = \sqrt{\frac{p}{\pi q}}Y_n(x)\sin\bigg(\frac{p}{q}l t\bigg) \\
+\end{gather}
+Введем в рассмотрение оператор $\tilde{P}_:L_2(\Omega)\rightarrow L_2(\Omega)$, областью определения которого является множество $W$ и $\tilde{P}h = h_{tt} + h_{xxxx} - a h_{xx}$ для $h \in W$. Далее обозначим оператор сопряженный в $L_2(\Omega)$ к $\tilde{P}$ как $P \;$ $(P = \tilde{P^{*}})$. Оператор $P$ является самосопряженным в пространстве $L_2(\Omega)$. Введем следующие обозначения: $Ker(P), R(P)$ - соответственно ядро и образ оператора P. Покажем, что функции (\ref{eigenf}) являются собственными функциями оператора $P$ со следующими собственными значениями:
+\begin{equation}\label{eigenv}
+  r_{nl} = \varphi_n - \bigg(\frac{p l}{q}\bigg)^2, \;\; n \in N, l \in Z_+
+\end{equation}
+
+Для это необходимо убедится в выполнении равенства
+\begin{equation}
+  P g^{sin, cos}_{nl} = r_{nl} g^{sin, cos}_{nl}
+\end{equation}
+Оператор задачи (\ref{equationkv2}) - (\ref{periodkv2}) представим в виде
+\begin{equation}
+  P = \frac{\partial^2 }{\partial t^2} + \frac{\partial^4 }{\partial x^4} - a \frac{\partial^2 }{\partial x^2}
+\end{equation}
+Вычислим
+\begin{multline}
+P g^{sin}_{nl} = -\sqrt{\frac{p}{\pi q}} \frac{p^2 l^2}{q^2} \sin\bigg(\frac{p}{q} l t\bigg)  Y_n + \sqrt{\frac{p}{\pi q}}  \sin\bigg(\frac{p}{q} l t\bigg)(Y^{(4)} - a Y'') =  \\
+= \sqrt{\frac{p}{\pi q}} \sin\bigg(\frac{p}{q} l t\bigg)  \bigg(\frac{(Y_n^{(4)} - a Y_n'')}{Y_n} - \frac{p^2 l^2}{q^2}\bigg) \cdot Y_n = g^{sin}_{nl} \bigg(\varphi_n - \bigg(\frac{p l}{q}\bigg)^2\bigg) =  g^{sin}_{nl} r_{nl}
+\end{multline}
+Рассмотрением выражения $P g^{cos}_{nl}$ можно так же показать, что $P g^{cos}_{nl} = r_{nl} g^{cos}_{nl}$
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[][Теорема о существовании решений задачи (\ref{equationkv2}) - (\ref{periodkv2})]{Теорема о существовании решений задачи (\ref{equationkv2}) - (\ref{periodkv2})}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Лемма о вполне непрерывности оператора]{Лемма о вполне непрерывности оператора}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Лемма. }\textit{Пусть выполнено условие (\ref{Tcond2}), тогда ядро $N(P)$ оператора P является конечномерным, а оператор $D^{-1}: R(D) \rightarrow R(D)$ является вполне непрервным}\\
+\textbf{Доказательство. }Из условия (\ref{Tcond2}) следует, что существует такое число m, что выполнено $\frac{q}{4}(2a + 1) \in (m - 1, m)$. Введем обозначение
+\begin{equation}\label{eps0}
+  \sigma_0 = \min\bigg(\frac{q}{4}(2a + 1) - l + 1, l - \frac{q}{4}(2a + 1)\bigg)
+\end{equation}
+Используя выражения (\ref{eps0}) и (\ref{fi}) выведем:
+\begin{multline}\label{t1}
+  |q\sqrt{\varphi} - p l| = \bigg|q\bigg(n + n' - k + \frac 3 2 + \frac{a}{4n} + O\bigg(\frac{1}{n^2}\bigg)\bigg)^2 - p l\bigg|  = \\
+  = \bigg|q\bigg((n + n' - k - 1)(n + n' - k - 2) + \bigg(n + n' - k - \frac 3 2 + \frac{a}{4n} + O\bigg(\frac{1}{n^2}\bigg)\bigg)\bigg(\frac{a}{4n} - \frac  1 2 + O\bigg(\frac{1}{n^2}\bigg)\bigg) + \\
+  + (n + n' - k - 1)\bigg(\frac{a}{4n} + \frac 1 2 + O\bigg(\frac{1}{n^2}\bigg)\bigg)\bigg  ) - p l\bigg|
+\end{multline}
+Введем обозначение $v(n, l) = q(n + n' - k - 1)(n + n' - k - 2) - pl \in \textbf{Z}$, тогда выражение (\ref{t1}) примет вид
+\begin{equation}\label{qq}
+  |q\sqrt{\varphi} - p l| = |v(n, l) + q(2a + 1)/4 + \alpha_n|,
+\end{equation}
+где $\alpha_n = O(\frac{1}{n})$. Пусть $n_1$ такое натурально число, что для любого $n > n_1$ $|\alpha_n| < \frac{\sigma_0}{2}$. Тогда так как для любого $n > n_1$ и $l \in \textbf{Z}$ $v(n, l)$ принимает только целые значения, при этом выражение $q(2a + 1)/4$ является нецелым, то имеет место следующая оценка
+\begin{equation}\label{eq4}
+  v(n, l) + q(2a + 1)/4 > \sigma_0,
+\end{equation}
+тогда из выражений (\ref{qq}) и (\ref{eq4}) следует оценка
+\begin{equation}\label{s0}
+  |q\sqrt{\varphi} - p l| \geqslant \frac{\sigma_0}{2},
+\end{equation}
+a из выражения (\ref{eigenv}) вытекает следующая оценка
+\begin{equation}\label{rnl}
+  |r_nl| \geqslant \frac{\sigma_0}{2 q^2}(q\sqrt{\varphi} + pl).
+\end{equation}
+Из выражения (\ref{rnl}) следует, что ядро оператора $P$ конечномерно, то есть равенство $r_{nl} = 0$ выполняется не более  чем  для конечного числа пар $(n, l) \in \textbf{N} \times \textbf{Z}_+$. Следовательно, $dim \; ker \; P < \infty$, таким образом, доказано первое утверждение леммы.
+Введем следующие обозначения
+\begin{equation}\label{sig1}
+  \sigma_1 = \frac{\sigma_0}{2 p}, \;\; y_n = \frac{q}{p}\sqrt{\varphi_n}
+\end{equation}
+Покажем что следующий ряд является ограниченным в $L_2(\Omega)$, для этого воспользуемся выражениями (\ref{fi}), (\ref{eigenv}).
+\begin{equation}
+  J = \sum\limits_{n = n_1}^{\infty}\sum\limits_{l = 0}^{\infty} \frac{1}{r_{nk}^2} = \frac{1}{q^2}\sum\limits_{n = n_1}^{\infty}\sum\limits_{l = 0}^{\infty} \frac{1}{(q\sqrt{\varphi_n} - pl)^2(q\sqrt{\varphi_n} + pl)^2} \leqslant \frac{1}{q^2 p^2}\sum\limits_{n = n_1}^{\infty}\frac{1}{\varphi_n}\bigg(\sum\limits_{l = 0}^{\infty} \frac{1}{(l - y_n)^2}\bigg)
+\end{equation}
+Из выражений (\ref{s0}), (\ref{sig1}) следует, что для любого натурального $n > n_1, \; l \in \textbf{Z}_+$ выполнено неравенство $|l - y_n| \geqslant \sigma_1$, причем $\sigma_1 \in (0, 1/2]$. Положим $y_n \in (d_n, d_{n+1}), d_n \in \textbf{Z}_+$, тогда имеет место оценка:
+\begin{equation}
+  J \leqslant \frac{2}{q^4 p^2} \sum\limits_{n = n_1}^{\infty}\frac{1}{\varphi_n}\bigg(\sum\limits_{l = 0}^{\infty} \frac{1}{(l - (y_n - d_n))^2}\bigg) \leqslant \frac{2}{q^4 p^2} \sum\limits_{n = n_1}^{\infty}\frac{1}{\varphi_n}\bigg(\sum\limits_{l = 1}^{\infty} \frac{1}{(l - (1 - \sigma_1))^2} + \frac{1}{\sigma_1^2}\bigg)
+\end{equation}
+Из сходимости ряда $J$ следует, что оператор $P^{-1}: R(P) \rightarrow R(P)$ является вполне непрерывным. Таким образом, лемма доказана
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[][Теорема о существовании бесконечного числа решений задачи (\ref{equationkv2}) - (\ref{periodkv2})]{Теорема о существовании бесконечного числа решений задачи (\ref{equationkv2}) - (\ref{periodkv2})}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Торема. }\textit{ФОРМУЛИРОВКА ТЕОРЕМЫ}
+\textbf{Доказательство.} Для доказательства теоремы воспользуемся вариационным методом. Введем обозначение: $Q_l, l \in \textbf{N}$ подпространства $L_2(\Omega)$, которые состоян из конечных линейных комбинаций элементов следующего множества
+\[
+   \left\{\begin{array}{lr}\label{aaaaaa}
+        Y_m(x) \cos\bigg(\frac{p}{q}kt\bigg), Y_m(x) \sin\bigg(\frac{p}{q}kt\bigg)
+        \end{array}\right\}, m \in [1, l], \;\;  k \in [0, l]
+  \]
+Подпространства $Q_l$ являются конечномерными, это следует из леммы и выражения (\ref{rnl}), введём на $Q_l$ функционал
+\begin{equation}
+  N(u) = \frac{1}{2}(Pu,u) + \frac{1}{p}\int\limits_{\Omega}g(x, t)|u|^p dx dt
+\end{equation}
+Для доказательства существования критических точек функционала $N$ воспользуемся методом из работы [O. Vevoda, "Partial di?erential equation,"Nordho?, Groningen (1981).].
+Введем разбиение исходного пространства $Q_l$ на прямую сумму двух подпространств $Q_l = D^{\delta} + U^{\delta}$. Базисы в данных пространствах задаются соответственно:
+\[
+   \left\{\begin{array}{lr}\label{aaaaaa}
+        Y_m(x) \cos\bigg(\frac{p}{q}kt\bigg), Y_m(x) \sin\bigg(\frac{p}{q}kt\bigg)
+        \end{array}\right\}, r_{mk}  \leqslant \delta, \;\; m \in [1, l], \;\;  k \in [0, l]
+  \]
+\[
+   \left\{\begin{array}{lr}\label{aaaaaa}
+        Y_m(x) \cos\bigg(\frac{p}{q}kt\bigg), Y_m(x) \sin\bigg(\frac{p}{q}kt\bigg)
+        \end{array}\right\}, r_{mk}  > \delta, \;\; m \in [1, l], \;\;  k \in [0, l]
+\]
+Покажем, что существует
+\begin{equation}\label{deq}
+  d \in (0, 1),
+\end{equation}
+независящее от $l$ такое, что
+\begin{equation}\label{ucond}
+  \|u\|_p^2 \leqslant C_1 \sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l} |r_{mk}|^d (a_{mk}^2 + b_{mk}^2)
+\end{equation}
+для любой функции $u$ из $Q_l \cap R(P)$, где $R(P)$ --- область определения оператора $P$, $a_{mk}, b_{mk}$ --- коэффициенты разложения функции $u$ в ряд Фурье по системе базисных функций, а $C_1$ не зависит от $u$ и $l$.
+Ввеедм вспомогательные обозначения
+\begin{equation}
+  p_1 = \frac{p}{p - 1}, \;\; \xi = \frac{2}{p_1}, \;\; \xi_1 = \frac{\xi}{\xi - 1}, \;\; \rho \in \bigg(\frac{p - 2}{2(p-1), \frac{2}{2(p-1)}}\bigg)
+\end{equation}
+Используя неравенства Хаусдорфа---Юнга, Гёлдера, а так же условие ограниченности собственных функций из базиса выведем
+\begin{gather*}
+  \|u\|_p \leqslant C_0 \bigg(\sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l}(|a_{mk}|^{p_1} + |b_{mk}|^{p_1})\bigg)^{\frac{1}{p_1}} = \\
+  = C_0  \bigg(\sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l} |r_{mk}|^{-\rho} (|r_{mk}|^{\rho}|a_{mk}|^{p_1} + |r_{mk}|^{\rho}|b_{mk}|^{p_1})\bigg)^{\frac{1}{p_1}} = \\
+  = C_0 \bigg(\sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l} \frac{1}{|r_{mk}|^{\rho \xi_1}} \bigg)^{\frac{1}{\xi_1 p_1}} \cdot \bigg(\sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l} |r_{mk}|^{\rho \xi} (|a_{mk}|^{\xi p_1} + |b_{mk}|^{\xi p_1})\bigg)^{\frac{1}{\xi p_1}} = \\
+  = C_0 \bigg(\sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l} \frac{1}{|r_{mk}|^{\rho \xi_1}} \bigg)^{\frac{1}{\xi_1 p_1}} \cdot \bigg(\sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l} |r_{mk}|^{\frac{2(p-1)\rho}{p}} (|a_{mk}|^2 + |b_{mk}|^2)\bigg)^{\frac{1}{2}}.
+\end{gather*}
+Если обозначить
+\begin{equation}
+  d = \frac{2(p-1)\rho}{p}, \;\; c = \rho \xi_1 = \frac{2(p-1)\rho}{p-2} \in (1, + \infty),
+\end{equation}
+тогда $d \in (0, 1)$ и неравенство (\ref{ucond}) выполнено с константой
+\begin{equation}
+  C_1 = C_0 \bigg(\sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l} \frac{1}{|r_{mk}|^{\rho}} \bigg)^{\frac{2}{\xi_1 p_1}}
+\end{equation}
+Здесь и далее $C_1, C_2, \ldots$ будут обозначать константы, которые не зависят от $l$. Обозначим через $R_l$ множество таких функций $w$, для которых имеет место следующее представление
+\begin{gather}
+  w = \sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l}Y_m \bigg(a_{mk}\cos\bigg(\frac{p}{q}kt\bigg) + b_{mk} \sin\bigg(\frac{p}{q}kt\bigg)\bigg) \\
+  \sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l}|r_{mk}|^d (a_{mk} ^2 + b_{mk}^2) = 1
+\end{gather}
+То есть для функций из единичного шара в норме
+\begin{equation}
+  |||w|||_s = \sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l}|r_{mk}|^s (a_{mk} ^2 + b_{mk}^2)
+\end{equation}
+Оценим значения функционала $N$ на множестве $R_{l} \cap D^{-\delta}$, причем $\delta > 0$, сначала проведем оценку сверху:
+\begin{equation}
+  N(u) \leqslant -\frac{1}{2} \sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l}|r_{mk}|(a_{mk}^2 + b_{mk}^2) + \frac{g^+}{p}\|u\|_p \leqslant -\frac{1}{2}\delta^{1 - d} + \frac{g^+}{p}\sqrt{C_1},
+\end{equation}
+для всех функций $u$, удовлетворяющих условию
+\begin{equation}
+  u = \sum\limits_{m = 1}^{l}\sum\limits_{k = 0}^{l}Y_m \bigg(a_{mk}\cos\bigg(\frac{p}{q}kt\bigg) + b_{mk} \sin\bigg(\frac{p}{q}kt\bigg)\bigg) \in R_l \cap D^{-\delta}.
+\end{equation}
+Выберем произвольное число L > 0, обозначим
+\begin{equation}
+   \delta_L = \bigg(2\bigg(L + \frac{g^+}{p}\sqrt{C_1}\bigg )\bigg)^{\frac{1}{1 - d}}
+\end{equation}
+Тогда имеет место следующее неравенство
+\begin{equation}
+  N(u) \leqslant -L \;\; \forall u \in R_l \cap D^{-\delta_L}
+\end{equation}
+Возьмем произвольное число $\kappa$, тогда для любой функции $u \in U^{-\kappa}$ выполняется
+\begin{equation}
+  N(u) \geqslant -\frac{1}{2}\kappa\|u\|^2 + \frac{g^-}{p}\|u\|_p^p \geqslant C_2\|u\|^p - \frac{1}{2}\kappa\|u\|^2
+\end{equation}
+Обозначим
+\begin{equation}
+  f(t) = C_2 t^p - \frac{1}{2}\kappa t^2
+\end{equation}
+Найдем минимум этой функции, для этого решим уравнение $f'(t) = 0$, тогда получим
+\begin{equation}
+  C_2 p t^{p-1} - \kappa t = 0 \\
+\end{equation}
+Это выполняется для
+$$t_{min} = \bigg(\frac{C_2 p}{\kappa}\bigg)^{\frac{1}{2-p}}$$
+После подстановки $t_{min}$ в функцию $f(t)$ получим следующее выражение
+\begin{multline}
+  f(t_{min}) = C_2\bigg(\frac{C_2 p}{\kappa}\bigg)^{\frac{p}{2-p}} - \frac{1}{2}\bigg(\frac{C_2 p}{\kappa}\bigg)^{\frac{2}{2-p}}\kappa = C_2^{\frac{2}{2 - p}}p^{\frac{p}{2-p}}\kappa^{\frac{p}{p-2}} - \frac{1}{2} C_2^{\frac{2}{2-p}}p^{\frac{2}{2-p}}\kappa^{\frac{p}{p-2}} = \\
+  = \kappa^{\frac{p}{p - 2}}(C_2 p)^{\frac{2}{2-p}}\bigg(\frac{1}{p} - \frac{1}{2}\bigg) = \frac{2 - p}{2p(C_2 p)^{\frac{2}{p-2}}} \kappa^{\frac{p}{p - 2}} = C_3 \kappa^{\frac{p}{p-2}},
+\end{multline}
+где
+\begin{equation}
+  C_3 = \frac{2 - p}{2p(C_2 p)^{\frac{2}{p-2}}}, \;\; g^- = \min\limits_{\Omega}g(x, t), \; \; g^+ = \max\limits_{\Omega}g(x, t)
+\end{equation}
+Оно выполнено для любого $u$ из $U^{-\kappa}$
+Введем обозначение
+\begin{equation}
+  z_{\kappa} = C_3 \kappa^{\frac{p}{p-2}} - 1
+\end{equation}
+Зафиксируем число $L$, пусть число $L_1$ такое, что $L_1 > \delta_L$, а также $D^{-L_1} \ne D^{-\delta_L}$. Из этого вытекает существование собственной функции $p(x, t) \in R_l$ оператора $P$ с собственным значением $r \in ( -L_1, -\delta_L ]$, тогда имеет место следующее неравенство
+$$-z_{L_1} < N(p) \leqslant -L, \;\; -z_{L_1} < -L$$
+Далее покажем, что на отрезке $[ -z_{L_1}]$ существует значение функционала $N(u)$ в его критической точке. Доказательство будем проводить от противного, предположим что на отрезке $[ -z_{L_1}]$ нет критических значений функционала $N$. Тогда из деформационной леммы [L. Nirenberg. "Variational and topological methods in nonlinear problems,"Bull.
+Amer. Math. Soc.(N.S.). ?1981.? V 4. N 3.? P. 267-302.] следует существование такого непрервыного нечетного отображения $h : Q_l \rightarrow Q_l$, что если функция $u \in Q_l$, а $N(u) \leqslant -L$, то $h(N(u)) < -z_{L_1}$
+Введем разбиение любой функции $u \in Q_l$ на сумму $u = u^D + u^U$, где $u^D \in D^{-L_1}, u^U \in U^{-L_1}$. Пусть $K$ есть линейный оператор, такой, что
+$$K: Q_l \rightarrow D^{-L_1}, \;\; Ku = u^{D} \;\; \forall u \in Q_l$$,
+то есть является проектором. Отображение $Kh : Q_l \rightarrow D^{-L_1}$ является нечетным и переводит пространство $R_l \cup D^{-L_1}$ в подмножество пространства $D^{-L_1}$ меньшей размерности. Тогда удовлетворяются условия теоремы Борсука, из нее следует, что существует $v_0 \in R_l \cup D^{-\delta_L}$, для которого выполняется:
+\begin{equation}
+  K h(v_0) = 0
+\end{equation}
+Значит, $h(v_0) = (h(v_0))^D \in D^{-L_1}$, а
+\begin{equation}\label{fqd}
+  N(h(v_0)) > z_{L_1}
+\end{equation}
+В то же время, $N(v_0) < L$, отсюда следует, что
+\begin{equation}
+  N(h(v_0)) \leqslant -z_{L_1}
+\end{equation}
+Это противоречит (\ref{fqd}), из этого противоречия следует, что существует такая функция $u_l \in Q_l$, такая, что
+\begin{equation}\label{eq7}
+  N'(u_l) = 0, \;\; N(u_l) \in [ -z_{L_1}, -L]
+\end{equation}
+Таким образом, существование критической точки функционала на отрезке $[-z_{L_1}, -L]$ доказано.
+Проведем предельный переход при $l \rightarrow \infty$, для этого оценим $\|u_l\|_p$. Из (\ref{eq7}) получаются следующие соотношения:
+\begin{equation}\label{eq5}
+  (P u_l, \psi) + \int\limits_{\Omega}g(x, t)|u_l|^{p-2}u_l \psi dx dt = 0 \;\; \forall \psi \in Q_l,
+\end{equation}
+\begin{equation}\label{eq6}
+  z_{L_1} \leqslant \frac 1 2 (P u_l, u_l) + \frac{1}{p}\int\limits_{\Omega} g(x, t)|u_l|^p dx dt \leqslant L.
+\end{equation}
+Если положить в равенстве (\ref{eq5}) $\psi = u_l$, далее умножить полученное выражение на $1/2$ и вычесть из него (\ref{eq6}), то получим (с учетом условия $p > 2$):
+\begin{gather}
+  L \leqslant \int\limits_{\Omega}g(x, t)\bigg(\frac{1}{2}|u_l|^{p-2}u_l^2 - \frac{1}{p}|u_l|^p\bigg) dx dt \leqslant z_{L_1} \\
+  L \leqslant \int\limits_{\Omega}g(x, t) |u_l|^{p-2}\bigg(\frac{1}{2}u_l^2 - \frac{1}{p}|u_l|^2\bigg) dx dt \leqslant z_{L_1} \\
+  L \leqslant \int\limits_{\Omega}g(x, t) |u_l|^{p-2} |u_l|^2 \bigg(\frac{1}{2} - \frac{1}{p}\bigg) dx dt \leqslant z_{L_1} \\
+  \frac{2p}{p-2}L \leqslant \int\limits_{\Omega}g(x, t) |u_l|^{p} dx dt \leqslant \frac{2p}{p-2}z_{L_1} \\
+\end{gather}
+Разобьем полученное выражение на два неравенства и рассмотрим их отдельно
+\begin{gather}
+ \frac{2p}{p-2}L \leqslant \int\limits_{\Omega}g(x, t) |u_l|^{p} dx dt \\
+ \frac{2p}{(p-2)g^{-}}L \leqslant \int\limits_{\Omega}|u_l|^{p} dx dt \\
+  \frac{2p}{(p-2)g^{-}}L \leqslant \|u_l\|_p^p \\
+\end{gather}
+С другой стороны
+\begin{gather}
+  \int\limits_{\Omega}g(x, t) |u_l|^{p} dx dt \leqslant \frac{2p}{p-2}z_{L_1} \\
+   \int\limits_{\Omega} |u_l|^{p} dx dt \leqslant \frac{2p}{(p-2)g^{+}}z_{L_1} \\
+  \|u_l\|_p^p \leqslant \frac{2p}{(p-2)g^{+}}z_{L_1} \\
+\end{gather}
+Итоговая оценка примет вид
+\begin{equation}\label{eq144}
+  C_3 \leqslant \|u_l\|_p^p \leqslant C_4,
+\end{equation}
+где $C_3 = \frac{2p}{(p-2)g^{-}}L , \;\; C_4 = \frac{2p}{(p-2)g^{+}}z_{L_1}$. Из (\ref{eq144}) следует существование подпоследовательности $u_{l_k} = w_k$, такой, что $w_k \rightarrow u$, слабо в $L_p(\Omega)$, а функция $g(x, t)|w_k|^{p-2}w_k \rightarrow g_0$ слабо в $L_{p_1}(\Omega)$. 
+Рассмотрим задачу (\ref{equationkv2}) --- (\ref{periodkv2}), покажем, что $u$ является её обобщенным решением. Пусть функции $w_k, u$ представляются в виде рядов Фурье по системе функций [ВСТАВИТЬ ССЫЛКУ!] с коэффициентаии $\{a_{ij}^k, b_{ij}^k\}, \{a_{ij}, b_{ij}\}$ соответственно. Проведем оценку значения суммы 
+\begin{equation}
+  J_{M}^k = \sum_{|r_{ij}| \geqslant M}{|r_{ij}|((a_{ij}^k)^2 + (b_{ij}^k)^2)},
+\end{equation}
+для этого введем обозначение
+\begin{equation*}
+\eta(t) =
+ \begin{cases}
+   \;\;\;1, t > 0 \\
+   -1, t \leqslant 0
+ \end{cases}
+\end{equation*}
+Подставим в выражение (\ref{eq5}) функцию
+\begin{equation}
+  \psi_0 = \sum\limits_{|r_{ij}| \geqslant M} \eta(r_{ij}) Y_i(x)\bigg( a_{ij}\cos\bigg(\frac{p}{q} jt\bigg) + b_{ij}\sin\bigg(\frac{p}{q} jt\bigg) \bigg),
+\end{equation}
+тогда применяя неравенство Гёлдера, а так же (\ref{ucond}) получим
+\begin{multline}
+  J_{M}^k \leqslant g^{+} \int\limits_{\Omega}|w_k|^{p-1}|\psi_0| dx dt \leqslant \\
+  \leqslant g^+ C_5^{\frac{p-1}{p}}\sqrt{C_1\sum\limits_{|r_{ij}| \geqslant L}|r_{ij}|^d((a_{ij}^k)^2+(b_{ij}^k)^2)} \leqslant \sqrt{C_1}g^+C_5^{\frac{p-1}{p}}\frac{1}{M^{\frac{1-d}{2}}}\sqrt{J_{M}^k}
+\end{multline}
+Отсюда следует, что
+\begin{gather}
+  J_M^k \leqslant \sqrt{C_1} g^+ C_5^{\frac{p-1}{p}} \frac{1}{M^{\frac{1-d}{2}}} \sqrt{J_M^k} \\
+  (J_{M}^k)^2 \leqslant C_1 \cdot(g^+)^2 C_5^{\frac{2(p-1)}{p}} \frac{1}{M^{1-d}}J_{M}^k \\
+  J_{M}^k\bigg(J_{M}^k - C_1 \cdot(g^+)^2 C_5^{\frac{2(p-1)}{p}}\frac{1}{M^{1-d}}\bigg) \leqslant 0
+\end{gather}
+В следствии неотрицательности $J_M^k$ получаем
+\begin{equation}
+  J_{M}^k \leqslant \frac{C_6}{M^{1-d}},  \\
+\end{equation}
+где $C_6 = C_1 \cdot(g^+)^2 C_5^{\frac{2(p-1)}{p}}$.
+
+\newpage
+
+
+\section[][Заключение]{Заключение}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+В работе была поставлена задача Штурма-Лиувилля для уравнения (\ref{equation}) - (\ref{period}). Было получено трансцендентное уравнение и в качестве его решения были получены собственные функции и асимптотика собственных значений. Далее были проведены оценки для собственных функций и их производных, а так же собственных значений. Была поставлена и доказана теорема о существовании и единственности решения операторного уравнения $Au = f$, а так же о его принадлежности $u \in H_1(\Omega)$ при $f \in L_2(\Omega)$ и  $u \in H_2(\Omega)$ при $f \in H_1(\Omega)$.
+
+\newpage
+
+\begin{thebibliography}{9}
+
+\bibitem{Berezin}Ф.А. Березин, М.А.Шубин. Уравнение Шрёдингера. М: Изд-во Моск. ун-та, 1983. -  392 с.
+\bibitem{Tihonov} А.Н. Тихонов, А.А. Самарский. Уравнения математической физики. М: Издательство Наука, 1977. -  735 с.
+\bibitem{Trenogin}Треногин В.А. Функциональный анализ. М: ФИЗМАТЛИТ, 2002. - 488 с.
+\bibitem{Rudakov1}Рудаков И.А. Периодические решения квазилинейного уравнения колебаний балки с однородными граничными условиями. Дифференциальные уравнения, 2012. -  48 с.
+\bibitem{Rudakov2}Рудаков И.А. Периодические решения квазилинейного уравнения вынужденных колебаний балки. Серия математическая. М: Известия РАН, 2015. -  34 с.
+\bibitem{Rudakov3}Рудаков И.А. О периодических решениях одного уравнения колебаний балки. Дифференциальные уравнения, 2018. -  54 с.
+\bibitem{Rudakov4}Рудаков И.А. Задача о колебаниях двутавровой балки с закрепленным и шарнирно опертым концами. М: Вестник МГТУ им. Н.Э. Баумана, 2019. - 21 c.
+\bibitem{Rudakov5}Рудаков И.А. Периодические решения квазилинейного уравнения Эйлера– Бернулли. Дифференциальные уравнения, 2019. - 11 c.
+
+\end{thebibliography}
+
+\end{document}

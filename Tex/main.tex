@@ -6,7 +6,7 @@
 
 \usepackage{hyperref}
 
-\usepackage[footnotes,oglav,spisok,boldsect,eqwhole,figwhole,kursrab,remarks,hyperprint,greekup]{project_cp}
+\usepackage[footnotes,oglav,spisok,boldsect,eqwhole,figwhole,kursrab,remarks,hyperprint]{project_cp}
 
 \frenchspacing
 
@@ -943,6 +943,10 @@ u_{tt} + u_{xxxx} - a u_{xx} = g(u) + f(x,t), \;\; x \in (0,\pi),\; t \in \textb
 \begin{equation}\label{periodkv2}
  u(x,t + T) = u(x,t), \; 0 < x < \pi , \; t \in \textbf{R}.
 \end{equation}
+В уравнении (\ref{equationkv2}) константы $a, h$ являются положительными и
+\begin{equation}\label{pcond}
+  p > 2
+\end{equation}
 
 Цель второй части работы --- получить условия существования, несуществования и единственности периодического решения задачи (\ref{equationkv}) -- (\ref{periodkv}), в случаях когда нелинейное слагаемое удовлетворяет условию резонансности и нерезонанстности на бесконечности.
 
@@ -1303,7 +1307,11 @@ P g^{sin}_{nl} = -\sqrt{\frac{p}{\pi q}} \frac{p^2 l^2}{q^2} \sin\bigg(\frac{p}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection[][Лемма о вполне непрерывности оператора]{Лемма о вполне непрерывности оператора}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textbf{Лемма. }\textit{Пусть выполнено условие (\ref{Tcond2}), тогда ядро $N(P)$ оператора P является конечномерным, а оператор $D^{-1}: R(D) \rightarrow R(D)$ является вполне непрервным}\\
+Будем полагать выполнение следующего условия
+\begin{equation}\label{aqcond}
+  a > 0,\; (2a + 1)q/4 \notin \textbf{N}
+\end{equation}
+\textbf{Лемма. }\textit{Пусть выполнены условия (\ref{Tcond2}), (\ref{aqcond}), тогда ядро $N(P)$ оператора P является конечномерным, а оператор $D^{-1}: R(D) \rightarrow R(D)$ является вполне непрервным}\\
 \textbf{Доказательство. }Из условия (\ref{Tcond2}) следует, что существует такое число m, что выполнено $\frac{q}{4}(2a + 1) \in (m - 1, m)$. Введем обозначение
 \begin{equation}\label{eps0}
   \sigma_0 = \min\bigg(\frac{q}{4}(2a + 1) - l + 1, l - \frac{q}{4}(2a + 1)\bigg)
@@ -1349,7 +1357,29 @@ a из выражения (\ref{eigenv}) вытекает следующая оценка
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection[][Теорема о существовании бесконечного числа решений задачи (\ref{equationkv2}) - (\ref{periodkv2})]{Теорема о существовании бесконечного числа решений задачи (\ref{equationkv2}) - (\ref{periodkv2})}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textbf{Торема. }\textit{ФОРМУЛИРОВКА ТЕОРЕМЫ}
+Пусть функция $g(x, t)$ в уравнении (\ref{equationkv2}) удовлетворяет следующимусловиям
+\begin{equation}\label{gcond1}
+  g(x, t) \in C^1(\Omega) \text{, а также }T-\text{периодичная по } t
+\end{equation}
+\begin{equation}\label{gcond2}
+  g(x, t) > 0 \;\; \forall(x, t) \in \Omega
+\end{equation}
+Пусть $H_1(\Omega) = W^1_2(\Omega), H_2(\Omega) = W^2_2(\Omega)$ есть пространства Соболева. Введем множество $V$
+\[
+   V = \left\{\begin{array}{lr}\label{sysys}
+         \psi \in C^{\infty}(\Omega)| \; \psi(0, t) = \psi_{xx}(0, t) = 0, \;\; \psi(\pi, t) = \psi_{xxx}(\pi, t) - h \psi(\pi, t)
+        \end{array}\right\}_{l,n \in N},
+  \]
+\textbf{Определение. }Обобщенным решением задачи (\ref{equationkv2})---(\ref{periodkv2}) называется функция $u \in L_2(\Omega)$ такая, что
+\begin{equation}\label{comsol2}
+  \int\limits_{\Omega}(u(\psi_{tt} + \psi_{xxxx} - a \psi_{xx}) + g(x, t)|u|^{p-2}u \psi)dxdt = 0 \;\; \forall \psi \in V
+\end{equation}
+
+\textbf{Торема. }Пусть выполнены  условия (\ref{pcond}), (\ref{Tcond2}), (\ref{aqcond}), (\ref{gcond1}), (\ref{gcond2}), тогда для любого $r > 0$ задача (\ref{equationkv2})---(\ref{periodkv2}) имеет обобщенное решение
+\begin{equation}
+  u \in H_2(\Omega) \cap C^1(\Omega),
+\end{equation}
+такое, что $\|u\|_p \geqslant r, \;\; u_{xx}, u_{xxx} \in C(\Omega)$ и граничные условия (\ref{ickv12})---(\ref{ickv22}) выполнены в классическом смысле.\\
 \textbf{Доказательство.} Для доказательства теоремы воспользуемся вариационным методом. Введем обозначение: $Q_l, l \in \textbf{N}$ подпространства $L_2(\Omega)$, которые состоян из конечных линейных комбинаций элементов следующего множества
 \[
    \left\{\begin{array}{lr}\label{aaaaaa}
@@ -1472,24 +1502,106 @@ $$K: Q_l \rightarrow D^{-L_1}, \;\; Ku = u^{D} \;\; \forall u \in Q_l$$,
   N(h(v_0)) \leqslant -z_{L_1}
 \end{equation}
 Это противоречит (\ref{fqd}), из этого противоречия следует, что существует такая функция $u_l \in Q_l$, такая, что
-\begin{equation}
+\begin{equation}\label{eq7}
   N'(u_l) = 0, \;\; N(u_l) \in [ -z_{L_1}, -L]
 \end{equation}
 Таким образом, существование критической точки функционала на отрезке $[-z_{L_1}, -L]$ доказано.
-Проведем предельный переход при $l \rightarrow \infty$, для этого оценим $\|u_l\|_p$. Из (\ref) получаются следующие соотношения:
+Проведем предельный переход при $l \rightarrow \infty$, для этого оценим $\|u_l\|_p$. Из (\ref{eq7}) получаются следующие соотношения:
 \begin{equation}\label{eq5}
   (P u_l, \psi) + \int\limits_{\Omega}g(x, t)|u_l|^{p-2}u_l \psi dx dt = 0 \;\; \forall \psi \in Q_l,
 \end{equation}
 \begin{equation}\label{eq6}
   z_{L_1} \leqslant \frac 1 2 (P u_l, u_l) + \frac{1}{p}\int\limits_{\Omega} g(x, t)|u_l|^p dx dt \leqslant L.
 \end{equation}
-Если положить в равенстве (\ref{eq5}) $\psi = u_l$, далее умножить полученное выражение на $1/2$ и вычесть из него (\ref{eq6}), то получим:
+Если положить в равенстве (\ref{eq5}) $\psi = u_l$, далее умножить полученное выражение на $1/2$ и вычесть из него (\ref{eq6}), то получим (с учетом условия $p > 2$):
 \begin{gather}
-  L \leqslant \int\limits_{\Omega}g(x, t)\bigg(\frac{1}{2}|u_l|^{p-2}u_k^2 - \frac{1}{p}|u_k|^p\bigg) dx dt \leqslant z_{L_1} 
+  L \leqslant \int\limits_{\Omega}g(x, t)\bigg(\frac{1}{2}|u_l|^{p-2}u_l^2 - \frac{1}{p}|u_l|^p\bigg) dx dt \leqslant z_{L_1} \\
+  L \leqslant \int\limits_{\Omega}g(x, t) |u_l|^{p-2}\bigg(\frac{1}{2}u_l^2 - \frac{1}{p}|u_l|^2\bigg) dx dt \leqslant z_{L_1} \\
+  L \leqslant \int\limits_{\Omega}g(x, t) |u_l|^{p-2} |u_l|^2 \bigg(\frac{1}{2} - \frac{1}{p}\bigg) dx dt \leqslant z_{L_1} \\
+  \frac{2p}{p-2}L \leqslant \int\limits_{\Omega}g(x, t) |u_l|^{p} dx dt \leqslant \frac{2p}{p-2}z_{L_1} \\
 \end{gather}
+Разобьем полученное выражение на два неравенства и рассмотрим их отдельно
+\begin{gather}
+ \frac{2p}{p-2}L \leqslant \int\limits_{\Omega}g(x, t) |u_l|^{p} dx dt \\
+ \frac{2p}{(p-2)g^{-}}L \leqslant \int\limits_{\Omega}|u_l|^{p} dx dt \\
+  \frac{2p}{(p-2)g^{-}}L \leqslant \|u_l\|_p^p \\
+\end{gather}
+С другой стороны
+\begin{gather}
+  \int\limits_{\Omega}g(x, t) |u_l|^{p} dx dt \leqslant \frac{2p}{p-2}z_{L_1} \\
+   \int\limits_{\Omega} |u_l|^{p} dx dt \leqslant \frac{2p}{(p-2)g^{+}}z_{L_1} \\
+  \|u_l\|_p^p \leqslant \frac{2p}{(p-2)g^{+}}z_{L_1} \\
+\end{gather}
+Итоговая оценка примет вид
+\begin{equation}\label{eq144}
+  C_3 \leqslant \|u_l\|_p^p \leqslant C_4,
+\end{equation}
+где $C_3 = \frac{2p}{(p-2)g^{-}}L , \;\; C_4 = \frac{2p}{(p-2)g^{+}}z_{L_1}$. Из (\ref{eq144}) следует существование подпоследовательности $u_{l_k} = w_k$, такой, что $w_k \rightarrow u$, слабо в $L_p(\Omega)$, а функция $g(x, t)|w_k|^{p-2}w_k \rightarrow g_0$ слабо в $L_{p_1}(\Omega)$.
+Рассмотрим задачу (\ref{equationkv2}) --- (\ref{periodkv2}), покажем, что $u$ является её обобщенным решением. Пусть функции $w_k, u$ представляются в виде рядов Фурье по системе функций [ВСТАВИТЬ ССЫЛКУ!] с коэффициентаии $\{a_{ij}^k, b_{ij}^k\}, \{a_{ij}, b_{ij}\}$ соответственно. Проведем оценку значения суммы
+\begin{equation}
+  J_{M}^k = \sum_{|r_{ij}| \geqslant M}{|r_{ij}|((a_{ij}^k)^2 + (b_{ij}^k)^2)},
+\end{equation}
+для этого введем обозначение
+\begin{equation*}
+\eta(t) =
+ \begin{cases}
+   \;\;\;1, t > 0 \\
+   -1, t \leqslant 0
+ \end{cases}
+\end{equation*}
+Подставим в выражение (\ref{eq5}) функцию
+\begin{equation}
+  \psi_0 = \sum\limits_{|r_{ij}| \geqslant M} \eta(r_{ij}) Y_i(x)\bigg( a_{ij}\cos\bigg(\frac{p}{q} jt\bigg) + b_{ij}\sin\bigg(\frac{p}{q} jt\bigg) \bigg),
+\end{equation}
+тогда применяя неравенство Гёлдера, а так же (\ref{ucond}) получим
+\begin{multline}
+  J_{M}^k \leqslant g^{+} \int\limits_{\Omega}|w_k|^{p-1}|\psi_0| dx dt \leqslant \\
+  \leqslant g^+ C_5^{\frac{p-1}{p}}\sqrt{C_1\sum\limits_{|r_{ij}| \geqslant L}|r_{ij}|^d((a_{ij}^k)^2+(b_{ij}^k)^2)} \leqslant \sqrt{C_1}g^+C_5^{\frac{p-1}{p}}\frac{1}{M^{\frac{1-d}{2}}}\sqrt{J_{M}^k}
+\end{multline}
+Отсюда следует, что
+\begin{gather}
+  J_M^k \leqslant \sqrt{C_1} g^+ C_5^{\frac{p-1}{p}} \frac{1}{M^{\frac{1-d}{2}}} \sqrt{J_M^k} \\
+  (J_{M}^k)^2 \leqslant C_1 \cdot(g^+)^2 C_5^{\frac{2(p-1)}{p}} \frac{1}{M^{1-d}}J_{M}^k \\
+  J_{M}^k\bigg(J_{M}^k - C_1 \cdot(g^+)^2 C_5^{\frac{2(p-1)}{p}}\frac{1}{M^{1-d}}\bigg) \leqslant 0
+\end{gather}
+В следствии неотрицательности $J_M^k$ получаем
+\begin{equation}
+  J_{M}^k \leqslant \frac{C_6}{M^{1-d}},  \\
+\end{equation}
+где $C_6 = C_1 \cdot(g^+)^2 C_5^{\frac{2(p-1)}{p}}$. Из ограниченности этого ряда следует существование пределеа
+\begin{equation}\label{eq12}
+  \lim\limits_{k \rightarrow \infty} (P w_k, w_k) = \sum\limits_{i = 1}^{\infty}\sum\limits_{j = 0}^{\infty} r_{ij} (a_{ij}^2 + b_{ij}^2)
+\end{equation}
+Зафиксируем функцию $\psi \in Q_{l_0}, \; l_0 \in \textbf{N}$ и перейдем в равенстве $\ref{eq5}$ к пределу в подпоследовательности $u_{l_k}$ при $l \rightarrow \infty$
+\begin{equation}\label{eq13}
+  (u, P \psi) + \int\limits_{\Omega}p_0 \psi dx dt = 0
+\end{equation}
+Требуется показать, что
+\begin{equation}
+  p_0 = g(x, t) |u|^{p-2} u
+\end{equation}
+Положим в равенстве (\ref{eq5}) $\psi = w_k, \; l = l_k$ и перейдем к пределу при $l \rightarrow \infty$, тогда получим
+\begin{equation}
+  \lim\limits_{l \rightarrow \infty}(P w_k, w_k) + \lim\limits_{k \rightarrow \infty} \int\limits_{\Omega} g(x, t)|w_k|^p dx dt = 0.
+\end{equation}
+Из равенства (\ref{eq12}) вытекает, что
+\begin{equation}
+  \lim\limits_{l \rightarrow \infty}(P w_k, w_k) = -\lim\limits_{k \rightarrow \infty} \int\limits_{\Omega} g(x, t)|w_k|^p dx dt = \sum\limits_{i = 1}^{\infty}\sum\limits_{j = 0}^{\infty} r_{ij} (a_{ij}^2 + b_{ij}^2)
+\end{equation}
+Докажем, что
+\begin{equation}
+  \lim\limits_{k \rightarrow \infty}(u, P w_k) = \sum\limits_{i = 1}^{\infty}\sum\limits_{j = 0}^{\infty} r_{ij} (a_{ij}^2 + b_{ij}^2)
+\end{equation}
+Введем обозначение
+\begin{equation}
+  I_M^l = \sum\limits_{i, j} |r_{ij}|((a_{ij})^2 + (b_{ij})^2), \;\; |r_{ij}| \geqslant M; \; i, j < l
+\end{equation}
+Тогда, если в (\ref{eq13}) подставить $\psi = \psi_0$, где
+\begin{equation}
+  \psi_0 =  \sum_{i, j} \eta(r_{ij}) Y_i(x)\bigg( a_{ij}\cos\bigg(\frac{p}{q} jt\bigg) + b_{ij}\sin\bigg(\frac{p}{q} jt\bigg) \bigg), \;\; |r_{ij}| \geqslant M; \; i, j < l
+\end{equation}
 
 \newpage
-
 
 \section[][Заключение]{Заключение}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

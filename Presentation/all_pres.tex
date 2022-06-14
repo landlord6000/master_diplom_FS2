@@ -1,0 +1,455 @@
+%\documentclass[a4paper]{article}
+%\usepackage{beamerarticle}
+\documentclass[ignorenonframetext,unicode,handout, 9pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx,pgf}
+\usepackage{multimedia}
+\usepackage{ragged2e}
+\justifying
+%\usepackage{hyperref}
+
+%\usetheme{Rochester}  %тема без навигации
+\usetheme{Montpellier} %тема с навигацией в виде дерева
+%\usetheme{Berkeley} %тема с оглавлением на полях
+%\usetheme{Berlin} %тема с навигацией в виде мини-слайдов
+\mode<presentation>{
+%\usetheme{Copenhagen} %тема с таблицей разделов и подразделов
+
+\graphicspath{{pictures/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+
+
+\numberwithin{equation}{section}
+%\numberwithin{equation}{subsection}
+%\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+%\useinnertheme{circles}   %внутренняя тема
+%\useoutertheme{smoothbars}   %внешняя тема
+\usecolortheme{beaver}     %цветовая схема
+\usefonttheme{serif}    %шрифты
+}
+% \\ {} \and \\  \\[3mm]
+\title[Периодические решения уравнения колебания балки с жестко закрепленным концом]{Периодические решения уравнения колебания балки с жестко закрепленным концом}
+\author[Выполнил: М.Д Зиновьев]{Выполнил: М.Д Зиновьев \and  \\ Науч. руководитель: д.ф - м.н., профессор, Рудаков И.А.}
+\institute{МГТУ имени Н.Э.Баумана (национальный исследовательский университет) \and Кафедра ФН-2(прикладная математика)}
+\date{\today}
+\titlegraphic{\includegraphics[width=2cm]{logo.png}}
+%\setbeamersize{text margin left=4cm}
+
+\begin{document}
+
+
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+\section{Постановка задачи 1}
+
+\begin{frame}{Постановка задачи 1.}
+\setbeamercovered{transparent}
+
+Рассматривается уравнение Эйлера---Бернулли
+
+\begin{equation}\label{equationkv}
+  u_{tt} + u_{xxxx} - au_{xx} = g(x, t, u) + f(x,t), \; x \in (0,\pi), \; t \in \textbf{R}
+\end{equation}
+
+с однородными граничными условиями на отрезке
+
+\begin{equation}\label{ickv1}
+  u(0,t) = u_{xx}(0,t) = 0, \; t \in \textbf{R}
+\end{equation}
+
+\begin{equation}\label{ickv2}
+  u(\pi,t) = u_{x}(\pi,t) = 0, \; t \in \textbf{R}
+\end{equation}
+
+и с условием периодичности по времени
+
+\begin{equation}\label{periodkv}
+ u(x,t + T) = u(x,t), \; x \in (0,\pi), \; t \in \textbf{R}.
+\end{equation}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Линейное уравнение}
+\subsection{Линейная задача}
+
+\begin{frame}{Линейная задача.}
+
+Рассмотрим линеаризованное уравнение:
+
+\begin{equation}\label{equation}
+  u_{tt} + u_{xxxx} - au_{xx} =  f(x,t), \; x \in (0,\pi), \; t \in \textbf{R}
+\end{equation}
+
+с однородными граничными условиями на отрезке
+
+\begin{equation}\label{ic1}
+  u(0,t) = u_{xx}(0,t) = 0, \; t \in \textbf{R}
+  \end{equation}
+
+\begin{equation}\label{ic2}
+  u(\pi,t) = u_{x}(\pi,t) = 0, \; t \in \textbf{R}
+\end{equation}
+
+и с условием периодичности по времени
+
+\begin{equation}\label{period}
+ u(x,t + T) = u(x,t), \; x \in (0,\pi) , \; t \in \textbf{R}.
+\end{equation}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+Задача Штурма---Лиувилля на поиск собственных  значений оператора уравнения (\ref{equation})
+
+\begin{equation}\label{task}
+  X'''' - a X'' = \lambda X, x \in (0,\pi),\; a > 0
+\end{equation}
+
+с граничными условиями
+
+\begin{gather*}
+  X(0) = X''(0) =0  \label{bc1}, \\
+  X(\pi) = X'(\pi) = 0 \label{bc2}.
+\end{gather*}
+
+Трансцендентное уравнение:
+
+\begin{multline}\label{313}
+\th\bigg(\pi \sqrt{\frac{1}{2}(a+\sqrt{a^{2}+4\lambda})}\bigg) \cdot \sqrt{\frac{1}{2}(\sqrt{a^{2}+4\lambda-a})} - \\
+\tg\bigg(\pi \sqrt{\frac{1}{2}(\sqrt{a^{2}+4\lambda}-a)}\bigg) \cdot \sqrt{\frac{1}{2}(a+\sqrt{a^{2}+4\lambda})} = 0
+\end{multline}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+Собственные функции можно представить ввиде:
+
+\begin{equation}
+X_n = C_n (\sin(y_n x) - \frac{\sin(y_n \pi)}{\sh(z_n \pi)} \sh(z_n x)).
+\end{equation}
+
+Из условия нормировки константа $C_n$ равна
+\begin{equation}\label{Cn}
+C_n = \sqrt{\frac{2}{\pi}} + \beta_n, \; \lim_{n \rightarrow \infty}\beta_n = 0.
+\end{equation}
+
+Произведя локализацию собственных значений, получим
+\begin{equation}\label{ln}
+  \lambda_n = \bigg(n + \frac{1}{4} - \theta_n\bigg)^4 + a\bigg(n + \frac{1}{4} - \theta_n\bigg)^2,\;\theta_n \in \bigg(0;\frac{1}{4}\bigg)
+\end{equation}
+
+Также имеют место оценки:
+\begin{equation}\label{thet}
+ \frac{a}{16(a + 1)} \cdot \frac{1}{n^2} < \theta_n < \frac{a+ 2}{2 \pi} \cdot \frac{1}{n^2},\; n \in \textbf{N}
+\end{equation}
+\begin{equation}\label{Xnk}
+  |X_n^{(k)}| \leqslant A_k n^k, A_k = const.
+\end{equation}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Собственные функции оператора $A$ и их свойства}
+
+\begin{frame}{Собственные функции оператора $A$.}
+
+Введем следующие условия на период и коэффициент $a$
+\begin{equation}\label{tabc}
+  T = 2\pi\frac{b}{c},\; b,c \in \textbf{N}, \; (b,c) = 1,
+\end{equation}
+\begin{equation}\label{a}
+  a > 0, \; (a + 1/8)b \notin \textbf{N}.
+\end{equation}
+
+Введем обозначение: $\Omega = [0;\pi] \times \textbf{R}/ (T \textbf{Z})$. Решение исходной задачи будет представлено в виде ряда Фурье по следующей системе функций в $L_2(\Omega)$
+
+\[\left\{\begin{array}{lr}\label{fwef}\frac{1}{T} X_n,  e_{nm}^c, e_{nm}^s\end{array}\right\}.\]
+
+\begin{equation}
+  e_{nm}^c = \sqrt{\frac{2}{T}}X_n \cos\bigg(\frac{2\pi}{T}m t\bigg), \;\; e_{nm}^s = \sqrt{\frac{2}{T}}X_n \sin\bigg(\frac{2\pi}{T}m t\bigg) \label{enm}
+\end{equation}
+
+Функции (\ref{enm}) являются собственными функциями дифференциального оператора $A = \frac{\partial^2}{\partial t^2} + \frac{\partial^4}{\partial x^4} - a \frac{\partial^2}{\partial x^2}$ исходной задачи с собственными значениями
+
+ \begin{equation}\label{munm}
+   \mu_{nm} = \lambda_n - \bigg(\frac{c}{b}m\bigg)^2,\; n \in N, \; m \in Z_+,
+ \end{equation}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Лемма}
+
+\begin{frame}{Лемма для линейного уравнения.}
+\textbf{Лемма}. Пусть выполнены условия (\ref{tabc}), (\ref{a}). Тогда оператор $A^{-1} : R(A) \rightarrow D(A)$ является вполне непрерывным, обобщенное решение $u$ исходной задачи существует и единственно на множестве $D(A) \cap R(A)$ и имеют место включения: \\
+если $f \in L_2(\Omega)\cap R(A)$, то
+\begin{equation}\label{1}
+  u = A^{-1}f \in H_1(\Omega)\cap C(\Omega), \; u_x \in C(\Omega),
+\end{equation}
+если $f \in  H_1(\Omega) \cap  R(A), $ то
+\begin{equation}\label{2}
+  u \in H_2(\Omega) \cap C^1(\Omega), \; u_{xx} \in C(\Omega).
+\end{equation}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Нелинейное уравнение}
+\subsection{Квазилинейное уравнение с условием  нерезонансности}
+
+\begin{frame}{Квазилинейное уравнение с условием  нерезонансности. Теорема 1.}
+
+\textbf{Теорема 1}.
+Пусть выполнены условия (\ref{tabc}), (\ref{a}). Положим, что $g(x,t,u)$ удовлетворяет условиям:
+\begin{enumerate}
+  \item $g \in C^1(\Omega \times \textbf{R}), \; T-$периодична по $t$;
+  \item Существуют константы $\alpha, \beta, \widetilde{u}$, что
+  \begin{equation}\label{enenf}
+    \alpha \leqslant \frac{g(x,t,u)}{u} \leqslant \beta \;\;\; \forall (x,t) \in \Omega, \;\; u \in (-\infty; -\widetilde{u}] \cup [\widetilde{u}; +\infty),
+  \end{equation}
+\end{enumerate}
+причем
+\begin{equation}\label{con}
+  \alpha < \beta, \widetilde{u} > 0, [\alpha,\beta] \cap \sigma = \emptyset,
+\end{equation}
+где $\sigma = sp(A)$. Тогда исходная задача  имеет обобщенное решение $u \in H_2(\Omega)\cap C^1(\Omega), \; u_{xx} \in C(\Omega)$ для любой $T$ --  периодической по $t$ правой части $f \in H_1(\Omega)$. Если дополнительно условиям теоремы функция $g(x,t,u)$ удовлетворяет условию
+\begin{equation}\label{42}
+  \alpha \leqslant g'_u(x,t,u) \leqslant \beta \;\; \; \forall (u,x,t) \in \Omega \times \textbf{R},
+\end{equation}
+тогда  задача  имеет единственное решение.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Квазилинейное уравнение с условием  резонансности}
+
+\begin{frame}{Квазилинейное уравнение с условием  резонансности.}
+
+Запишем уравнение в следующем виде:
+\begin{equation}\label{54}
+u_{tt} + u_{xxxx} - a u_{xx} = g(u) + f(x,t), \;\; x \in (0,\pi),\; t \in \textbf{R}
+\end{equation}
+Где $g(u):$
+\begin{equation}\label{42}
+g(u) = \lambda u  + p(u),
+\end{equation}
+Причем $\lambda \in \sigma$, а функция $p(u)$ ограниченная, то есть существует такая $L$, что
+\begin{equation}\label{43}
+  |p(u)| \leqslant L \;\; \forall u \in \textbf{R}
+\end{equation}
+Обозначим $ N_2 = ker (A - \lambda I), \; N_1 = N_2^{\bot}, \; N_1, N_2 \in L_2(\Omega)$. Представим функцию $f \in L_2(\Omega)$ в виде суммы
+\begin{equation}\label{44}
+  f = f_1 + f_2, \; f_1 \in N_1, \; f_2 \in N_2.
+\end{equation}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Квазилинейное уравнение с условием  резонансности. Теорема 2.}
+
+\textbf{Теорема 2}. Пусть выполнены условия (\ref{tabc}), (\ref{a}), (\ref{42}), (\ref{43}), $\lambda \in \sigma$, функция $p(u) \in C^{1}(\textbf{R})$ не убывает или не возрастает по $u$. Также предположим, что функция $f(x,t) \in H_1(\Omega)$ имеет представление (\ref{44}) и слагаемое $f_2$ удовлетворяет либо неравенству:
+\begin{equation}\label{461}
+  p(-\infty) + \delta \leqslant -f_2(x,t) \leqslant p(+\infty) - \delta \;\; \forall (x,t) \in \Omega
+\end{equation}
+в том случае, если $p(u)$ не убывает,  либо неравенству
+\begin{equation}\label{462}
+  p(+\infty) + \delta \leqslant -f_2(x,t) \leqslant p(-\infty) - \delta \;\; \forall (x,t) \in \Omega
+\end{equation}
+в том случае, если $p(u)$ не возрастает с константой $ \delta > 0$, $(p(\pm\infty) = \lim\limits_{x \rightarrow \pm \infty}p(u))$.  Тогда задача  имеет обобщенное решение  $u \in H_2(\Omega) \cap C^{1}(\Omega)$ и $u_{xx} \in C(\Omega)$
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Постановка задачи 2}
+\begin{frame}{Постановка задачи 2.}
+\setbeamercovered{transparent}
+
+Рассматривается уравнение Эйлера---Бернулли
+
+\begin{equation}\label{equationkv2}
+  u_{tt} + u_{xxxx} - au_{xx} = g(x, t)|u|^{p-2}u + f(x,t), \; x \in (0,\pi), \; t \in \textbf{R}
+\end{equation}
+
+с однородными граничными условиями на отрезке
+
+\begin{equation}\label{ickv21}
+  u(0,t) = u_{xx}(0,t) = 0, \; t \in \textbf{R}
+\end{equation}
+
+\begin{equation}\label{ickv22}
+  u_x(\pi,t) = u_{xxx}(\pi,t) - h u(\pi t   ) = 0, \; t \in \textbf{R}
+\end{equation}
+
+и с условием периодичности по времени
+
+\begin{equation}\label{periodkv2}
+ u(x,t + T) = u(x,t), \; x \in (0,\pi), \; t \in \textbf{R},
+\end{equation}
+константы $a, h$ являются положительными, а $p$ удовлетворяет условию
+\begin{equation}\label{pcond}
+  p > 2
+\end{equation}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Линейное уравнение}
+\subsection{Линейная задача}
+\begin{frame}{Линейная задача}
+
+Задача Штурма---Лиувилля примет следующий вид
+
+\begin{equation}\label{task2}
+  Y'''' - a Y'' = \lambda Y, x \in (0,\pi),\; a > 0
+\end{equation}
+
+с граничными условиями
+
+\begin{gather*}
+  Y(0) = Y''(0) = 0  \label{bc21}, \\
+  Y'(\pi) = Y'''(\pi) - h Y(\pi) = 0 \label{bc22}.
+\end{gather*}
+
+Трансцендентное уравнение:
+
+\begin{multline}\label{tre2}
+ \frac{1}{\ctg\bigg(\pi \sqrt{\frac{1}{2}(\sqrt{a^2 + 4 \lambda} - a)}\bigg)} = \\
+ =\sqrt{\frac{ \sqrt{a^2 + 4 \lambda} - a}{\sqrt{a^2 + 4 \lambda} + a}}\th\bigg(\pi \sqrt{\frac{1}{2}(\sqrt{a^2 + 4 \lambda} + a)}\bigg) - \\
+ - \frac{1}{h}\bigg(2 \sqrt[\frac{2}{3}]{\frac{1}{2}(\sqrt{a^2 + 4 \lambda} - a)} + \sqrt{\frac{1}{2}(\sqrt{a^2 + 4 \lambda} - a)} a\bigg)
+\end{multline}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+Собственные функции можно представить ввиде:
+
+\begin{equation}
+Y_n = C_n (\sin(b_n x) -  \sh(c_n x) \frac{b_n \cos(b_n \pi)}{c_n \ch(c_n \pi)}).
+\end{equation}
+
+После локализации собственных значений, получим
+\begin{equation}\label{ln}
+  \lambda_n = \bigg(n - \frac{1}{2} + \rho_n\bigg)^4 + a\bigg(n - \frac{1}{2} + \rho_n\bigg)^2,\;\rho_n \in \bigg(0;\frac{1}{2}\bigg)
+\end{equation}
+
+где величина $\rho_n$ обладает следующим свойством
+\begin{equation}\label{thet}
+ C_1 \cdot \frac{1}{n^3} < \theta_n < C_2 \cdot \frac{1}{n^3},\; C_1, C_2 \in \textbf{R},\;n \in \textbf{N}
+\end{equation}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Нелинейное уравнение}
+\subsection{Лемма}
+
+\begin{frame}{Лемма.}
+
+Введем следующие условия
+\begin{equation}\label{cond3}
+   T = 2\pi\frac{q}{p}, \; \text{НОД}(q, p) = 1
+\end{equation}
+\begin{equation}\label{cond4}
+   a > 0, \;\; (2a + 1)q/4 \ne N
+\end{equation}
+Оператор исходной задачи $P$ представим в виде
+\begin{equation}
+  P = \frac{\partial^2}{\partial t^2} + \frac{\partial^4}{\partial x^4} - a \frac{\partial^2}{\partial x^2}
+\end{equation}
+\textbf{Лемма. }\textit{Пусть выполнены условия (\ref{cond3}), (\ref{cond4}), тогда ядро $N(P)$ оператора P является конечномерным, а оператор $P^{-1}: R(D) \rightarrow R(D)$ является вполне непрервным}\\
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Теорема}
+
+\begin{frame}{Теорема.}
+Будем предполагать выполнение следующих условий:
+\begin{equation}\label{cond1}
+  g(x, t) \in C^1(\Omega), \text{а также } T-\text{периодична по } t,
+\end{equation}
+\begin{equation}\label{cond2}
+  g(x, t) > 0 \;\; \forall(x, t) \in \Omega, 
+\end{equation}
+
+тогда сформулируем теорему, которая будет доказана в этой работе
+\\
+\textbf{Теорема. } Пусть выполнены условия (\ref{pcond}), (\ref{cond3}) --- (\ref{cond2}), тогда для любого $d > 0$ задача (\ref{equationkv2}) --- (\ref{periodkv2}) имеет обобщенное решение \\
+\begin{equation}
+  u \in H_2(\Omega) \cap C^1(\Omega),
+\end{equation}
+такое, что $\|u\|_p \geqslant d,$ а $u_{xx}, u_{xxx} \in C(\Omega)$ и граничные условия (\ref{ickv21}), (\ref{ickv22}) выполнены в классическом смысле
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Заключение}
+
+\begin{frame}{Заключение.}
+
+\begin{enumerate}
+  \item Исследована соответствующая задача Штурма-Лиувилля на поиск собственных значений и собственных функций.
+  \item Получено трансцендентное уравнение на собственные значения и проведено исследование его корней.
+  \item Произведена полная локализация собственных значений.
+  \item Выведены асимптотические оценки для собственных значений.
+  \item Доказаны теоремы о существовании и единственности решения исходной задачи в нерезонансном и резонансном случаях.
+\end{enumerate}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Список литературы}
+
+\begin{frame}
+
+\begin{thebibliography}{9}
+
+\bibitem{Yama}Yamaguchi M., Existence of periodic solutions of second order nonlinear evolution equations and applications. Funkcialaj Ekvacioj. 1995. v. 38. p. 519-538.
+\bibitem{JiS}Ji S. Periodic solutions for one dimensional wave equation with bounded nonlinearity. J. Differential Equations. 2018. v. 264. No 9. p. 5527-5540.
+\bibitem{Tihonov} А.Н. Тихонов, А.А. Самарский. Уравнения математической физики. М: Издательство Наука, 1977. -  735 с.
+\bibitem{Rudakov3}Рудаков И.А. Задача о периодических колебаниях двутавровой балки с  жестко закрепленным концом в случае резонанса. Дифференциальные уравнения, 2020. -  с. 691-700.
+\bibitem{Rudakov5}Рудаков И.А. Периодические решения квазилинейного уравнения Эйлера– Бернулли. Дифференциальные уравнения, 2019. - c. 1581-1583.
+\bibitem{Rudakov6}Рудаков И.А. Уравнение колебаний балки с закрепленными и шарнирно опертыми концами. Вестник МГУ. Серия 1. Математика. Механика. 2020. №2 - с. 3-8.
+
+
+\end{thebibliography}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
